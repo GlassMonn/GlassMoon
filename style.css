@@ -1,0 +1,1394 @@
+/* =========================================================
+   GLASS MOON STUDIO – Éjsötét, lilás-kékes, üveges téma v2
+   Különálló stíluslap (osztálynevek változatlanok)
+========================================================= */
+
+:root {
+    /* Színek */
+    --accent: #A78BFA;
+    --accent-strong: #8B5CF6;
+    --accent-blue: #5EA2FF;
+    --accent-indigo: #6D5DFB;
+    --background: #03020A;
+    --background-secondary: #050316;
+    --text: #F6F3FF;
+    --text-muted: #D0C8EE;
+    --text-secondary: #9E94C8;
+
+    /* Üveg */
+    --border: rgba(255, 255, 255, 0.10);
+    --border-strong: rgba(196, 181, 253, 0.32);
+    --glass: rgba(255, 255, 255, 0.05);
+    --glass-strong: rgba(255, 255, 255, 0.08);
+    --glass-dark: rgba(6, 4, 22, 0.55);
+    --blur: blur(24px) saturate(170%);
+    --highlight: inset 0 1px 0 rgba(255, 255, 255, 0.12);
+    --shadow-glass: 0 20px 60px -12px rgba(0, 0, 0, 0.6), var(--highlight);
+    --glow-shadow: 0 24px 70px -10px rgba(109, 93, 251, 0.45);
+
+    /* Vékony, színátmenetes "üvegél" */
+    --edge: linear-gradient(145deg,
+            rgba(255, 255, 255, .34) 0%,
+            rgba(167, 139, 250, .16) 30%,
+            rgba(255, 255, 255, .04) 60%,
+            rgba(94, 162, 255, .26) 100%);
+    --edge-hover: linear-gradient(145deg,
+            rgba(255, 255, 255, .55) 0%,
+            rgba(167, 139, 250, .5) 40%,
+            rgba(94, 162, 255, .5) 100%);
+
+    /* Formák és mozgás */
+    --radius-s: 14px;
+    --radius-m: 26px;
+    --radius-l: 36px;
+    --ease: cubic-bezier(.22, .8, .2, 1);
+}
+
+* {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 24px;
+    color-scheme: dark;
+    scrollbar-color: #3B2A7A #03020A;
+    scrollbar-width: thin;
+}
+
+body {
+    position: relative;
+    margin: 0;
+    background: var(--background);
+    color: var(--text);
+    font-family: Inter, system-ui, -apple-system, "Segoe UI", sans-serif;
+    font-size: 16px;
+    line-height: 1.65;
+    font-feature-settings: "ss01", "cv11";
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+}
+
+/* Finom filmszemcse az egész oldalon – mélységet ad, megszünteti a "lapos" sötétet */
+
+body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    pointer-events: none;
+    opacity: .05;
+    mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 .9 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+}
+
+h1, h2, h3 {
+    margin: 0;
+    font-family: "Space Grotesk", system-ui, sans-serif;
+    letter-spacing: -0.03em;
+    text-wrap: balance;
+}
+
+p {
+    margin: 0;
+    text-wrap: pretty;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+    transition: opacity .25s var(--ease), transform .25s var(--ease), background .25s var(--ease), color .25s var(--ease);
+}
+
+a:hover {
+    opacity: .92;
+}
+
+button {
+    color: inherit;
+    font: inherit;
+}
+
+a:focus-visible,
+button:focus-visible {
+    outline: 2px solid #C4B5FD;
+    outline-offset: 3px;
+}
+
+::selection {
+    background: #7C3AED;
+    color: #fff;
+}
+
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: #03020A;
+}
+
+::-webkit-scrollbar-thumb {
+    border: 2px solid #03020A;
+    border-radius: 999px;
+    background: linear-gradient(180deg, #6D4AE0, #3B5BDB);
+}
+
+/* ---------------------------------------------------------
+   Üvegél (gradiens hajszálkeret) – közös minden üveg elemre
+--------------------------------------------------------- */
+
+.gm-header,
+.gm-hero-feature,
+.gm-glass-caption,
+.gm-event,
+.gm-album,
+.gm-video-frame,
+.gm-contact-card,
+.gm-gallery-item,
+.gm-button-secondary {
+    position: relative;
+}
+
+.gm-glass-caption {
+    position: absolute;
+}
+
+.gm-header::before,
+.gm-hero-feature::before,
+.gm-glass-caption::before,
+.gm-event::before,
+.gm-album::before,
+.gm-video-frame::before,
+.gm-contact-card::before,
+.gm-gallery-item::before,
+.gm-button-secondary::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    padding: 1px;
+    border-radius: inherit;
+    background: var(--edge);
+    pointer-events: none;
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
+    transition: background .4s var(--ease);
+}
+
+.gm-event:hover::before,
+.gm-contact-card:hover::before,
+.gm-gallery-item:hover::before,
+.gm-button-secondary:hover::before {
+    background: var(--edge-hover);
+}
+
+/* ---------------------------------------------------------
+   Oldal és szekciók
+--------------------------------------------------------- */
+
+.gm-page {
+    width: 100%;
+    min-height: 100vh;
+    overflow: hidden;
+    background: var(--background);
+    color: var(--text);
+}
+
+.gm-section {
+    position: relative;
+    overflow: hidden;
+}
+
+.gm-hero,
+.gm-events,
+.gm-contact {
+    background:
+        radial-gradient(1200px 640px at 50% -12%, rgba(109, 93, 251, .14), transparent 70%),
+        var(--background);
+}
+
+.gm-gallery,
+.gm-video {
+    background:
+        radial-gradient(1100px 560px at 50% 115%, rgba(124, 58, 237, .13), transparent 70%),
+        var(--background-secondary);
+}
+
+/* Finom pontrács a hero mögött */
+
+.gm-hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background-image: radial-gradient(rgba(196, 181, 253, .28) 1px, transparent 1.4px);
+    background-size: 34px 34px;
+    -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 40%, #000 20%, transparent 75%);
+    mask-image: radial-gradient(ellipse 70% 60% at 50% 40%, #000 20%, transparent 75%);
+    opacity: .35;
+}
+
+/* Aurora fények */
+
+.gm-glow {
+    position: absolute;
+    border-radius: 50%;
+    pointer-events: none;
+    filter: blur(50px);
+    opacity: .95;
+    animation: gm-float 20s ease-in-out infinite alternate;
+}
+
+@keyframes gm-float {
+    from { transform: translate3d(0, 0, 0) scale(1); }
+    to   { transform: translate3d(40px, -30px, 0) scale(1.1); }
+}
+
+.gm-glow-hero-right {
+    width: 720px;
+    height: 720px;
+    right: -240px;
+    top: -220px;
+    background: radial-gradient(circle, rgba(139, 92, 246, .6), transparent 65%);
+}
+
+.gm-glow-hero-left {
+    width: 600px;
+    height: 600px;
+    left: -260px;
+    bottom: -200px;
+    background: radial-gradient(circle, rgba(59, 130, 246, .42), transparent 65%);
+    animation-delay: -7s;
+}
+
+.gm-glow-gallery {
+    width: 600px;
+    height: 600px;
+    left: -220px;
+    top: 20px;
+    background: radial-gradient(circle, rgba(124, 58, 237, .4), transparent 65%);
+}
+
+.gm-glow-events {
+    width: 640px;
+    height: 640px;
+    right: -260px;
+    top: 40px;
+    background: radial-gradient(circle, rgba(99, 102, 241, .45), transparent 65%);
+    animation-delay: -4s;
+}
+
+.gm-glow-video {
+    width: 640px;
+    height: 640px;
+    left: -240px;
+    bottom: -240px;
+    background: radial-gradient(circle, rgba(59, 130, 246, .38), transparent 65%);
+    animation-delay: -10s;
+}
+
+.gm-glow-contact {
+    width: 720px;
+    height: 720px;
+    right: -280px;
+    bottom: -300px;
+    background: radial-gradient(circle, rgba(139, 92, 246, .48), transparent 65%);
+}
+
+/* ---------------------------------------------------------
+   Fejléc – lebegő üveg-pill
+--------------------------------------------------------- */
+
+.gm-header-wrap {
+    position: relative;
+    z-index: 3;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 18px 16px 0;
+}
+
+.gm-header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px 24px;
+    padding: 10px 14px 10px 24px;
+    border-radius: 999px;
+    background: linear-gradient(135deg, rgba(255, 255, 255, .09), rgba(255, 255, 255, .03));
+    backdrop-filter: var(--blur);
+    -webkit-backdrop-filter: var(--blur);
+    box-shadow: var(--shadow-glass);
+}
+
+.gm-logo {
+    display: flex;
+    align-items: center;
+}
+
+.gm-logo img {
+    display: block;
+    width: auto;
+    max-width: 100%;
+    height: 60px;
+    object-fit: contain;
+}
+
+.gm-nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2px;
+    padding: 4px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, .04);
+    color: var(--text-muted);
+    font-size: 14.5px;
+    font-weight: 500;
+}
+
+.gm-nav a {
+    padding: 9px 18px;
+    border-radius: 999px;
+}
+
+.gm-nav a:hover {
+    background: rgba(167, 139, 250, .2);
+    color: #fff;
+    opacity: 1;
+}
+
+/* ---------------------------------------------------------
+   Hero
+--------------------------------------------------------- */
+
+.gm-hero-content {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 64px;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: clamp(48px, 9vw, 88px) 24px clamp(64px, 11vw, 112px);
+}
+
+.gm-hero-text {
+    display: flex;
+    flex: 1 1 380px;
+    min-width: 0;
+    flex-direction: column;
+    gap: 26px;
+}
+
+/* Eyebrow = üveg "chip" */
+
+.gm-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    align-self: flex-start;
+    padding: 7px 16px 7px 14px;
+    border: 1px solid rgba(167, 139, 250, .28);
+    border-radius: 999px;
+    background: rgba(167, 139, 250, .10);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    color: #D9CEFF;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+}
+
+.gm-eyebrow::before {
+    content: "";
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent), var(--accent-blue));
+    box-shadow: 0 0 12px 2px rgba(139, 92, 246, .8);
+    animation: gm-pulse 2.8s ease-in-out infinite;
+}
+
+@keyframes gm-pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50%      { opacity: .55; transform: scale(.8); }
+}
+
+.gm-hero-text h1 {
+    background: linear-gradient(180deg, #FFFFFF 0%, #D6CCFF 55%, #8FA8FF 130%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: #fff;
+    font-size: clamp(40px, 9vw, 76px);
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: -0.045em;
+}
+
+.gm-hero-description {
+    max-width: 520px;
+    color: var(--text-muted);
+    font-size: clamp(17px, 2.2vw, 19px);
+    line-height: 1.7;
+}
+
+.gm-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+    padding-top: 10px;
+}
+
+.gm-button {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 52px;
+    padding: 0 32px;
+    border: 0;
+    border-radius: 999px;
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: .005em;
+    text-align: center;
+    cursor: pointer;
+    transition: transform .3s var(--ease), box-shadow .3s var(--ease), background-position .6s var(--ease), background .3s var(--ease);
+}
+
+.gm-button:hover {
+    transform: translateY(-2px);
+}
+
+.gm-button:active {
+    transform: translateY(0) scale(.97);
+}
+
+.gm-button-primary {
+    background: linear-gradient(110deg, #B49CFF 0%, #7C8CF8 45%, #5EA2FF 100%);
+    background-size: 160% 100%;
+    background-position: 0% 0;
+    color: #0A0620;
+    box-shadow: 0 10px 30px -6px rgba(124, 140, 248, .55), inset 0 1px 0 rgba(255, 255, 255, .5);
+}
+
+.gm-button-primary:hover {
+    background-position: 100% 0;
+    box-shadow: 0 16px 44px -6px rgba(124, 140, 248, .75), inset 0 1px 0 rgba(255, 255, 255, .55);
+}
+
+.gm-button-secondary {
+    background: var(--glass-strong);
+    backdrop-filter: var(--blur);
+    -webkit-backdrop-filter: var(--blur);
+    box-shadow: var(--highlight);
+}
+
+.gm-button-secondary:hover {
+    background: rgba(167, 139, 250, .16);
+}
+
+.gm-hero-feature {
+    flex: 1 1 380px;
+    min-width: 0;
+    min-height: 500px;
+    overflow: hidden;
+    border-radius: var(--radius-l);
+    background: linear-gradient(155deg, #6D3FE0 0%, #2A1670 48%, #0A0624 100%);
+    box-shadow: 0 40px 100px -20px rgba(0, 0, 0, .7), 0 0 100px rgba(99, 102, 241, .25);
+}
+
+.gm-hero-feature-image {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url("./assets/kiemelt.jpeg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    border-radius: inherit;
+    transition: transform 1s var(--ease);
+}
+
+.gm-hero-feature:hover .gm-hero-feature-image {
+    transform: scale(1.05);
+}
+
+.gm-hero-feature::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background:
+        linear-gradient(180deg, rgba(109, 93, 251, .12) 0%, transparent 35%),
+        linear-gradient(180deg, transparent 50%, rgba(3, 2, 10, .65));
+    pointer-events: none;
+}
+
+.gm-glass-caption {
+    z-index: 3;
+    right: 22px;
+    bottom: 22px;
+    left: 22px;
+    padding: 18px 22px;
+    border-radius: 24px;
+    background: linear-gradient(135deg, rgba(255, 255, 255, .15), rgba(255, 255, 255, .05));
+    backdrop-filter: var(--blur);
+    -webkit-backdrop-filter: var(--blur);
+    box-shadow: var(--highlight), 0 12px 40px rgba(0, 0, 0, .35);
+}
+
+.gm-caption-eyebrow {
+    color: #E4DBFF;
+    font-size: 12px;
+    letter-spacing: .16em;
+    text-transform: uppercase;
+}
+
+/* ---------------------------------------------------------
+   Általános szekcióelrendezés
+--------------------------------------------------------- */
+
+.gm-container {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: clamp(64px, 11vw, 112px) 24px;
+}
+
+.gm-section-content {
+    display: flex;
+    flex-direction: column;
+    gap: 48px;
+}
+
+.gm-section-heading {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.gm-section-heading h2,
+.gm-video-text h2 {
+    background: linear-gradient(180deg, #FFFFFF 10%, #C6B9FB 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: #fff;
+    font-size: clamp(32px, 6vw, 52px);
+    font-weight: 700;
+    line-height: 1.08;
+    letter-spacing: -0.04em;
+}
+
+/* ---------------------------------------------------------
+   Galéria
+--------------------------------------------------------- */
+
+.gm-gallery-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.gm-gallery-item {
+    flex: 1 1 240px;
+    min-width: 0;
+    min-height: 340px;
+    overflow: hidden;
+    border-radius: var(--radius-m);
+    box-shadow: 0 20px 50px -14px rgba(0, 0, 0, .6);
+    transition: transform .5s var(--ease), box-shadow .5s var(--ease);
+}
+
+.gm-gallery-item:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 30px 70px -14px rgba(0, 0, 0, .7), 0 0 50px rgba(124, 92, 246, .28);
+}
+
+.gm-gallery-item-large {
+    flex: 2 1 420px;
+    min-height: 400px;
+}
+
+.gm-gallery-placeholder-1 {
+    background-image: url('assets/P1020174.JPG');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.gm-gallery-placeholder-2 {
+    background-image: url('assets/P1000301.JPG');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.gm-gallery-placeholder-3 {
+    background-image: url('assets/P1010168.JPG');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.gm-gallery-placeholder-4 {
+    background-image: url('assets/P1050035.JPG');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.gm-gallery-placeholder-5 {
+    background-image: url('assets/P1010756.JPG');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+}
+
+.gm-gallery-caption {
+    position: absolute;
+    z-index: 3;
+    bottom: 16px;
+    left: 16px;
+    padding: 8px 18px;
+    border: 1px solid rgba(255, 255, 255, .16);
+    border-radius: 999px;
+    background: var(--glass-dark);
+    backdrop-filter: blur(16px) saturate(160%);
+    -webkit-backdrop-filter: blur(16px) saturate(160%);
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.gm-gallery-note {
+    color: var(--text-secondary);
+    font-size: 14px;
+}
+
+/* ---------------------------------------------------------
+   Eseménylista
+--------------------------------------------------------- */
+
+.gm-event-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.gm-event {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 16px 32px;
+    padding: 26px 32px;
+    border-radius: var(--radius-m);
+    background: linear-gradient(135deg, rgba(255, 255, 255, .07), rgba(255, 255, 255, .025));
+    backdrop-filter: var(--blur);
+    -webkit-backdrop-filter: var(--blur);
+    box-shadow: var(--shadow-glass);
+    transition: transform .4s var(--ease), box-shadow .4s var(--ease), background .4s var(--ease);
+}
+
+.gm-event:hover {
+    transform: translateY(-4px);
+    background: linear-gradient(135deg, rgba(167, 139, 250, .15), rgba(94, 162, 255, .05));
+    box-shadow: var(--glow-shadow), var(--highlight);
+}
+
+.gm-event-date {
+    flex: 0 0 140px;
+    background: linear-gradient(135deg, #C4B5FD, var(--accent-blue));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: var(--accent);
+    font-family: "Space Grotesk", system-ui, sans-serif;
+    font-size: 23px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+}
+
+.gm-event-info {
+    flex: 1 1 240px;
+    min-width: 0;
+}
+
+.gm-event-info h3 {
+    font-size: 24px;
+    font-weight: 500;
+}
+
+.gm-event-info p {
+    color: var(--text-secondary);
+}
+
+.gm-event-button {
+    flex: 0 0 auto;
+}
+
+/* ---------------------------------------------------------
+   Album
+--------------------------------------------------------- */
+
+.gm-album {
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+    padding: clamp(16px, 4vw, 30px);
+    border-radius: var(--radius-l);
+    background: linear-gradient(145deg, rgba(255, 255, 255, .09), rgba(255, 255, 255, .025));
+    backdrop-filter: blur(30px) saturate(170%);
+    -webkit-backdrop-filter: blur(30px) saturate(170%);
+    box-shadow: 0 40px 110px -20px rgba(0, 0, 0, .75), var(--highlight);
+    scroll-margin-top: 20px;
+}
+
+.gm-album-header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px 20px;
+}
+
+.gm-album-title {
+    min-width: 0;
+}
+
+.gm-album-title h3 {
+    font-size: clamp(22px, 5vw, 32px);
+    font-weight: 700;
+}
+
+.gm-close-button {
+    min-height: 44px;
+    padding: 0 24px;
+}
+
+.gm-album-viewer {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 3 / 2;
+    max-height: 560px;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, .12);
+    border-radius: 24px;
+    background: var(--album-bg, #060414);
+    box-shadow: inset 0 0 80px rgba(0, 0, 0, .55);
+}
+
+.gm-album-main-image {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    background: #060410;
+    object-fit: contain;
+    transition: opacity .3s ease;
+}
+
+.gm-album-arrow {
+    position: absolute;
+    top: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 50px;
+    margin-top: -25px;
+    padding: 0;
+    border: 1px solid rgba(255, 255, 255, .22);
+    border-radius: 50%;
+    background: var(--glass-dark);
+    backdrop-filter: blur(16px) saturate(160%);
+    -webkit-backdrop-filter: blur(16px) saturate(160%);
+    box-shadow: var(--highlight);
+    cursor: pointer;
+    transition: background .3s var(--ease), transform .3s var(--ease), box-shadow .3s var(--ease);
+}
+
+.gm-album-arrow:hover {
+    background: rgba(124, 58, 237, .8);
+    box-shadow: 0 0 32px rgba(139, 92, 246, .65);
+    transform: scale(1.1);
+}
+
+.gm-album-arrow svg {
+    width: 22px;
+    height: 22px;
+}
+
+.gm-album-arrow path {
+    fill: none;
+    stroke: #F6F3FF;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.gm-album-prev {
+    left: 16px;
+}
+
+.gm-album-next {
+    right: 16px;
+}
+
+.gm-album-caption {
+    position: absolute;
+    bottom: 16px;
+    left: 16px;
+    padding: 8px 18px;
+    border: 1px solid rgba(255, 255, 255, .16);
+    border-radius: 999px;
+    background: var(--glass-dark);
+    backdrop-filter: blur(16px) saturate(160%);
+    -webkit-backdrop-filter: blur(16px) saturate(160%);
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.gm-album-thumbnails {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 10px;
+}
+
+.gm-album-thumb {
+    position: relative;
+    display: block;
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    padding: 0;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, .14);
+    border-radius: 14px;
+    outline: var(--thumb-ring, 2px solid transparent);
+    outline-offset: 2px;
+    background: var(--thumb-bg, #0B0820);
+    cursor: pointer;
+    transition: transform .3s var(--ease), border-color .3s var(--ease), filter .3s var(--ease);
+}
+
+.gm-album-thumb:hover {
+    transform: translateY(-3px);
+    border-color: var(--border-strong);
+}
+
+.gm-album-thumb img {
+    position: absolute;
+    inset: 0;
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* ---------------------------------------------------------
+   Videó
+--------------------------------------------------------- */
+
+.gm-video-content {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 56px;
+}
+
+.gm-video-frame {
+    flex: 3 1 420px;
+    min-width: 0;
+    overflow: hidden;
+    aspect-ratio: 16 / 9;
+    border-radius: 30px;
+    background: #060414;
+    box-shadow: 0 40px 100px -20px rgba(0, 0, 0, .75), 0 0 80px rgba(99, 102, 241, .2);
+}
+
+.gm-video-frame iframe {
+    position: absolute;
+    inset: 0;
+    display: block;
+    width: 100%;
+    height: 100%;
+    border: 0;
+}
+
+.gm-video-text {
+    display: flex;
+    flex: 2 1 300px;
+    min-width: 0;
+    flex-direction: column;
+    gap: 22px;
+}
+
+.gm-video-text > p:not(.gm-eyebrow) {
+    color: var(--text-muted);
+}
+
+/* ---------------------------------------------------------
+   Kapcsolat
+--------------------------------------------------------- */
+
+.gm-contact-intro {
+    max-width: 560px;
+    color: var(--text-muted);
+}
+
+.gm-contact-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 18px;
+}
+
+.gm-contact-card {
+    display: flex;
+    flex: 1 1 240px;
+    min-width: 0;
+    flex-direction: column;
+    gap: 8px;
+    padding: 30px 32px;
+    border-radius: var(--radius-m);
+    background: linear-gradient(135deg, rgba(255, 255, 255, .07), rgba(255, 255, 255, .025));
+    backdrop-filter: var(--blur);
+    -webkit-backdrop-filter: var(--blur);
+    box-shadow: var(--shadow-glass);
+    transition: transform .4s var(--ease), box-shadow .4s var(--ease), background .4s var(--ease);
+}
+
+.gm-contact-card:hover {
+    transform: translateY(-4px);
+    background: linear-gradient(135deg, rgba(167, 139, 250, .13), rgba(94, 162, 255, .05));
+    box-shadow: var(--glow-shadow), var(--highlight);
+}
+
+.gm-contact-label {
+    color: var(--text-secondary);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: .16em;
+    text-transform: uppercase;
+}
+
+.gm-contact-card p:last-child {
+    font-size: 19px;
+    font-weight: 500;
+}
+
+/* ---------------------------------------------------------
+   Lábléc
+--------------------------------------------------------- */
+
+.gm-footer {
+    border-top: 1px solid rgba(255, 255, 255, .08);
+    background: linear-gradient(180deg, rgba(124, 58, 237, .07), var(--background) 65%);
+}
+
+.gm-footer-content {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 12px;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 30px 24px;
+    color: var(--text-secondary);
+    font-size: 14px;
+}
+
+/* ---------------------------------------------------------
+   Görgetésre megjelenő animáció (támogató böngészőkben)
+--------------------------------------------------------- */
+
+@keyframes gm-reveal {
+    from {
+        opacity: 0;
+        translate: 0 32px;
+        filter: blur(6px);
+    }
+}
+
+@supports (animation-timeline: view()) {
+    .gm-section-heading,
+    .gm-event,
+    .gm-contact-card,
+    .gm-gallery-item,
+    .gm-video-frame,
+    .gm-video-text,
+    .gm-hero-feature {
+        animation: gm-reveal linear backwards;
+        animation-timeline: view();
+        animation-range: entry 0% entry 35%;
+    }
+}
+
+/* ---------------------------------------------------------
+   Galéria – végleges méretezés
+--------------------------------------------------------- */
+
+#album-container {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+}
+
+#album-container[hidden] {
+    display: none !important;
+}
+
+#album-container .gm-album {
+    width: 100%;
+    max-width: 1800px;
+    margin: 40px auto;
+    padding: 24px;
+}
+
+#album-container .gm-album-viewer {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 80vh;
+    min-height: 650px;
+    max-height: 1200px;
+    aspect-ratio: auto;
+    overflow: hidden;
+}
+
+#album-container .gm-album-main-image {
+    position: absolute;
+    inset: 0;
+    display: block;
+    width: 100%;
+    height: 100%;
+    max-width: none;
+    max-height: none;
+    object-fit: contain;
+    object-position: center;
+}
+
+#album-container .gm-album-thumbnails {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 14px;
+}
+
+#album-container .gm-album-thumb {
+    flex: 0 0 150px;
+    width: 150px;
+    height: 105px;
+}
+
+#album-container .gm-album-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* ---------------------------------------------------------
+   Reszponzív nézet
+--------------------------------------------------------- */
+
+@media (max-width: 760px) {
+    .gm-header {
+        padding: 10px 14px;
+    }
+
+    .gm-logo img {
+        height: 52px;
+    }
+
+    .gm-hero-content,
+    .gm-video-content {
+        gap: 36px;
+    }
+
+    .gm-hero-feature {
+        min-height: 380px;
+    }
+
+    .gm-event {
+        padding: 22px;
+    }
+
+    .gm-event-date {
+        flex-basis: 100%;
+    }
+
+    .gm-event-button {
+        width: 100%;
+    }
+}
+
+@media (max-width: 700px) {
+    #album-container .gm-album {
+        padding: 12px;
+    }
+
+    #album-container .gm-album-viewer {
+        height: 65vh;
+        min-height: 400px;
+    }
+
+    #album-container .gm-album-thumb {
+        flex-basis: 100px;
+        width: 100px;
+        height: 75px;
+    }
+}
+
+@media (max-width: 520px) {
+    .gm-header-wrap {
+        padding: 10px 10px 0;
+    }
+
+    .gm-header {
+        align-items: flex-start;
+        flex-direction: column;
+        border-radius: 28px;
+    }
+
+    .gm-nav {
+        width: 100%;
+        justify-content: space-between;
+        font-size: 14px;
+    }
+
+    .gm-nav a {
+        padding: 9px 12px;
+    }
+
+    .gm-hero-content,
+    .gm-container {
+        padding-right: 18px;
+        padding-left: 18px;
+    }
+
+    .gm-hero-text h1 {
+        font-size: clamp(38px, 12vw, 52px);
+    }
+
+    .gm-hero-feature {
+        min-height: 320px;
+        border-radius: 28px;
+    }
+
+    .gm-gallery-item,
+    .gm-gallery-item-large {
+        flex-basis: 100%;
+        min-height: 280px;
+    }
+
+    .gm-album-thumbnails {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .gm-album-arrow {
+        width: 42px;
+        height: 42px;
+        margin-top: -21px;
+    }
+
+    .gm-footer-content {
+        padding-right: 18px;
+        padding-left: 18px;
+    }
+}
+
+/* Tartalék, ha nincs backdrop-filter támogatás */
+
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+    .gm-header,
+    .gm-event,
+    .gm-album,
+    .gm-contact-card,
+    .gm-glass-caption,
+    .gm-button-secondary {
+        background: rgba(18, 12, 48, .94);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+        transition-duration: .01ms !important;
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+    }
+}
+
+.gm-facebook-profile {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 12px 18px;
+    border: 1px solid rgba(150, 120, 255, .3);
+    border-radius: 16px;
+    background: rgba(25, 25, 55, .65);
+    color: white;
+    text-decoration: none;
+    transition: .3s ease;
+}
+
+.gm-facebook-profile:hover {
+    border-color: #1877F2;
+    transform: translateY(-3px);
+    box-shadow: 0 0 20px rgba(24, 119, 242, .2);
+}
+
+.gm-facebook-profile img {
+    width: 58px;
+    height: 58px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.gm-facebook-profile span:nth-child(2) {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.gm-facebook-profile small {
+    color: #aaa;
+}
+
+.gm-facebook-arrow {
+    margin-left: auto;
+    color: #8e9fff;
+}
+
+.gm-phone-profile {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 12px 18px;
+    border: 1px solid rgba(94, 234, 212, .25);
+    border-radius: 16px;
+    background: rgba(20, 50, 55, .55);
+    color: white;
+    text-decoration: none;
+    transition: .3s ease;
+}
+
+.gm-phone-profile:hover {
+    border-color: #5EEAD4;
+    transform: translateY(-3px);
+    box-shadow: 0 0 20px rgba(94, 234, 212, .18);
+}
+
+.gm-phone-icon {
+    font-size: 27px;
+    color: #5EEAD4;
+}
+
+.gm-phone-text {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.gm-phone-text small {
+    color: #aaa;
+}
+
+.gm-phone-arrow {
+    margin-left: auto;
+    color: #5EEAD4;
+}
+
+/* GLASS MOON – EMAIL BUTTON */
+
+.gm-email-profile {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 12px 18px;
+
+    border: 1px solid rgba(167, 139, 250, 0.3);
+    border-radius: 16px;
+
+    background: rgba(55, 35, 85, 0.45);
+    backdrop-filter: blur(12px);
+
+    color: #ffffff;
+    text-decoration: none;
+
+    transition: all 0.3s ease;
+}
+
+.gm-email-profile:hover {
+    border-color: #b48aff;
+    background: rgba(100, 65, 150, 0.25);
+
+    transform: translateY(-3px);
+
+    box-shadow:
+        0 0 15px rgba(167, 139, 250, 0.2),
+        0 0 30px rgba(109, 40, 217, 0.15);
+}
+
+.gm-email-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 48px;
+    height: 48px;
+
+    border-radius: 13px;
+
+    background: rgba(167, 139, 250, 0.15);
+
+    color: #c4a5ff;
+    font-size: 25px;
+}
+
+.gm-email-text {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.gm-email-text strong {
+    color: #ffffff;
+    font-size: 15px;
+    font-weight: 600;
+}
+
+.gm-email-text small {
+    color: #aaa5bd;
+    font-size: 12px;
+}
+
+.gm-email-arrow {
+    margin-left: auto;
+    color: #b48aff;
+    font-size: 20px;
+
+    transition: transform 0.3s ease;
+}
+
+.gm-email-profile:hover .gm-email-arrow {
+    transform: translate(3px, -3px);
+}

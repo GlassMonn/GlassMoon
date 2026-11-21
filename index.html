@@ -1,0 +1,237 @@
+<!doctype html>
+<html lang="hu">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#05030E">
+    <meta name="description" content="Glass Moon Studio – fotózás, események és videók.">
+    <title>Glass Moon Studio</title>
+
+    <link rel="stylesheet" href="./style.css">
+    <link rel="stylesheet" href="./album.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap">
+</head>
+<body>
+<div class="gm-page">
+
+    <!-- HERO / FEJLÉC -->
+    <section id="fent" class="gm-section gm-hero">
+        <div class="gm-glow gm-glow-hero-right" aria-hidden="true"></div>
+        <div class="gm-glow gm-glow-hero-left" aria-hidden="true"></div>
+
+        <div class="gm-header-wrap">
+            <header class="gm-header">
+                <a href="#fent" class="gm-logo" aria-label="Glass Moon Studio, vissza az elejére">
+                    <img src="./assets/a4598eda7fc422496225b82204e09829.png"
+                         alt="Glass Moon Studio">
+                </a>
+
+                <nav class="gm-nav" aria-label="Fő menü">
+                    <a href="#galeria">Galéria</a>
+                    <a href="#esemenyek">Események</a>
+                    <a href="#video">Videó</a>
+                    <a href="#kapcsolat">Kapcsolat</a>
+                </nav>
+            </header>
+        </div>
+
+        <div class="gm-hero-content">
+            <div class="gm-hero-text">
+                <p class="gm-eyebrow">Fotózás · Események · Videó</p>
+                <h1>Pillanatok, amelyek üvegtisztán megmaradnak.</h1>
+                <p class="gm-hero-description">
+                    A Glass Moon Studio képei emberekről, helyekről és eseményekről szólnak.
+                    Nézd meg a galériát, az események albumait és a videókat.
+                </p>
+
+                <div class="gm-buttons">
+                    <a href="#galeria" class="gm-button gm-button-primary">Galéria megnézése</a>
+                    <a href="#kapcsolat" class="gm-button gm-button-secondary">Kapcsolat</a>
+                </div>
+            </div>
+
+            <div class="gm-hero-feature">
+                <div class="gm-hero-feature-image"
+                    role="img"
+                    aria-label="Glass Moon Studio kiemelt fotó"
+                    style="background-image: url('./assets/kiemelt.jpeg');">
+                </div>
+
+                <div class="gm-glass-caption">
+                    <p class="gm-caption-eyebrow">Assassin's Creed: Az éden almája</p>
+                    <p>Glass Moon Studio</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- GALÉRIA -->
+    <section id="galeria" class="gm-section gm-gallery">
+        <div class="gm-glow gm-glow-gallery" aria-hidden="true"></div>
+
+        <div class="gm-container gm-section-content">
+            <div class="gm-section-heading">
+                <p class="gm-eyebrow">Galéria</p>
+                <h2>Válogatás a képeimből</h2>
+            </div>
+
+            <div class="gm-gallery-grid">
+                <div class="gm-gallery-item gm-gallery-item-large gm-gallery-placeholder gm-gallery-placeholder-1">
+                    <p class="gm-gallery-caption">Majális · 2026</p>
+                </div>
+                <div class="gm-gallery-item gm-gallery-placeholder gm-gallery-placeholder-2">
+                    <p class="gm-gallery-caption">Portré fotózás · 2026</p>
+                </div>
+                <div class="gm-gallery-item gm-gallery-placeholder gm-gallery-placeholder-3">
+                    <p class="gm-gallery-caption">Lovas nap · 2026</p>
+                </div>
+                <div class="gm-gallery-item gm-gallery-placeholder gm-gallery-placeholder-4">
+                    <p class="gm-gallery-caption">Neoton Fámília koncert · 2026</p>
+                </div>
+                <div class="gm-gallery-item gm-gallery-placeholder gm-gallery-placeholder-5">
+                    <p class="gm-gallery-caption">Bérmálás · 2026</p>
+                </div>
+            </div>
+
+            <p class="gm-gallery-note"></p>
+        </div>
+    </section>
+
+    <!-- ESEMÉNYEK – a JavaScript automatikusan tölti fel a Google Drive-ból -->
+    <section id="esemenyek" class="gm-section gm-events">
+        <div class="gm-glow gm-glow-events" aria-hidden="true"></div>
+
+        <div class="gm-container gm-section-content">
+            <div class="gm-section-heading">
+                <p class="gm-eyebrow">Események</p>
+                <h2>Ahol ott voltam a kamerával</h2>
+            </div>
+
+            <div class="gm-event-list" aria-live="polite">
+                <p class="gm-loading">Események betöltése...</p>
+            </div>
+
+            <!-- A Google Drive-albumot a script.js jeleníti meg -->
+            <div id="album-container" class="gm-album-container" hidden></div>
+        </div>
+    </section>
+
+    <!-- VIDEÓ -->
+    <section id="video" class="gm-section gm-video">
+        <div class="gm-glow gm-glow-video" aria-hidden="true"></div>
+
+        <div class="gm-container gm-video-content">
+            <div class="gm-video-frame">
+                <iframe
+                    src=https://www.youtube.com/embed/K3Yu4zqmK18?autoplay
+                    title="Glass Moon Studio videó"
+                    loading="lazy"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    referrerpolicy="strict-origin-when-cross-origin"
+                    allowfullscreen>
+                </iframe>
+            </div>
+
+            <div class="gm-video-text">
+                <p class="gm-eyebrow">Videó</p>
+                <h2>Nézd meg mozgásban is</h2>
+                <p>
+                    
+                </p>
+                <div>
+                    <a href="https://www.youtube.com/@Rakoczi_Lovasa"
+                       target="_blank" rel="noopener noreferrer"
+                       class="gm-button gm-button-primary">Megnyitás a YouTube-on</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- KAPCSOLAT -->
+    <section id="kapcsolat" class="gm-section gm-contact">
+        <div class="gm-glow gm-glow-contact" aria-hidden="true"></div>
+
+        <div class="gm-container gm-section-content">
+            <div class="gm-section-heading">
+                <p class="gm-eyebrow">Kapcsolat</p>
+                <h2>Dolgozzunk együtt</h2>
+                <p class="gm-contact-intro">
+                    Írj, ha fotózást szeretnél megbeszélni egy eseményre vagy egy közös munkára.
+                </p>
+            </div>
+
+            <div class="gm-contact-grid">
+                <div class="gm-contact-card">
+                    <p class="gm-contact-label">E-mail</p>
+                    <a href="https://mail.google.com/mail/?view=cm&fs=1&to=gmpictures01@gmail.com"
+                    class="gm-email-profile"
+                    target="_blank"
+                    rel="noopener noreferrer">
+
+                        <span class="gm-email-icon">✉</span>
+
+                        <span class="gm-email-text">
+                            <strong>E-mail kapcsolat</strong>
+                            <small>Írj nekünk!</small>
+                        </span>
+
+                        <span class="gm-email-arrow">↗</span>
+                    </a>
+                </div>
+
+                <div class="gm-contact-card">
+                    <p class="gm-contact-label">Telefon</p>
+                    <a href="tel:+36205321341" class="gm-phone-profile">
+                        <span class="gm-phone-icon">☎</span>
+
+                        <span class="gm-phone-text">
+                            <strong>Telefonos kapcsolat</strong>
+                            <small>+36 20 532 1341</small>
+                        </span>
+
+                        <span class="gm-phone-arrow">↗</span>
+                    </a>
+                </div>
+
+                <div class="gm-contact-card">
+                    <p class="gm-contact-label">Közösségi oldal</p>
+                    <a href="https://www.facebook.com/profile.php?id=100089495163344"
+                        class="gm-facebook-profile"
+                        target="_blank"
+                        rel="noopener noreferrer">
+
+                            <img src="assets\734733383_1009419662051197_13158194155706588_n.jpg"
+                                alt="Facebook profilkép">
+
+                            <span>
+                                <strong>Facebook</strong>
+                                <small>Profil megtekintése</small>
+                            </span>
+
+                            <span class="gm-facebook-arrow">↗</span>
+                        </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- LÁBLÉC -->
+    <footer class="gm-footer">
+        <div class="gm-footer-content">
+            <p>© <span id="current-year"></span> Glass Moon Studio</p>
+            <a href="#fent">Vissza az elejére</a>
+        </div>
+    </footer>
+
+</div>
+
+<!-- A Google Drive galéria működéséhez szükséges JavaScript -->
+<script src="./script.js" defer></script>
+<script>
+    document.getElementById("current-year").textContent = new Date().getFullYear();
+</script>
+</body>
+</html>

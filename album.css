@@ -1,0 +1,287 @@
+/* Glass Moon Studio – Google Drive eseményalbum kiegészítő stílusai
+   Ezt a fájlt az index.html-ben a style.css UTÁN töltsd be. */
+
+.gm-loading,
+.gm-error,
+.gm-empty {
+    color: rgba(235, 231, 255, 0.78);
+    text-align: center;
+    padding: 24px 16px;
+}
+
+.gm-error {
+    color: #ffb7c5;
+}
+
+.gm-event-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 22px;
+    margin-top: 28px;
+}
+
+.gm-event-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-height: 170px;
+    overflow: hidden;
+    padding: 24px;
+    border: 1px solid rgba(167, 123, 255, 0.24);
+    border-radius: 18px;
+    color: #f4efff;
+    text-align: left;
+    background:
+        radial-gradient(circle at 85% 15%, rgba(132, 83, 255, 0.22), transparent 42%),
+        linear-gradient(145deg, rgba(22, 23, 51, 0.96), rgba(9, 11, 29, 0.98));
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.22);
+    cursor: pointer;
+    transition: transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
+}
+
+.gm-event-card:hover {
+    transform: translateY(-5px);
+    border-color: rgba(180, 138, 255, 0.72);
+    box-shadow: 0 16px 42px rgba(91, 48, 170, 0.22);
+}
+
+.gm-event-card:focus-visible,
+.gm-album button:focus-visible {
+    outline: 2px solid #b48aff;
+    outline-offset: 4px;
+}
+
+.gm-event-card::before {
+    content: "";
+    position: absolute;
+    width: 130px;
+    height: 130px;
+    right: -45px;
+    bottom: -55px;
+    border-radius: 50%;
+    background: rgba(145, 93, 255, 0.13);
+    filter: blur(3px);
+    pointer-events: none;
+}
+
+.gm-event-card-title {
+    position: relative;
+    z-index: 1;
+    margin: 0 0 12px;
+    font-size: 1.12rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    overflow-wrap: anywhere;
+}
+
+.gm-event-card-meta {
+    position: relative;
+    z-index: 1;
+    margin-top: auto;
+    color: rgba(220, 211, 255, 0.68);
+    font-size: 0.88rem;
+}
+
+.gm-event-card-icon {
+    position: relative;
+    z-index: 1;
+    display: inline-grid;
+    place-items: center;
+    width: 42px;
+    height: 42px;
+    margin-bottom: 20px;
+    border: 1px solid rgba(180, 138, 255, 0.35);
+    border-radius: 13px;
+    color: #c8aaff;
+    background: rgba(132, 83, 255, 0.12);
+    font-size: 1.2rem;
+}
+
+.gm-album-container {
+    margin-top: 36px;
+}
+
+.gm-album {
+    padding: clamp(16px, 3vw, 30px);
+    border: 1px solid rgba(167, 123, 255, 0.25);
+    border-radius: 22px;
+    color: #f4efff;
+    background:
+        radial-gradient(circle at 95% 0%, rgba(109, 40, 217, 0.16), transparent 36%),
+        rgba(9, 11, 29, 0.94);
+    box-shadow: 0 18px 55px rgba(0, 0, 0, 0.28);
+}
+
+.gm-album-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 22px;
+}
+
+.gm-album-title {
+    margin: 0;
+    color: #f4efff;
+    font-size: clamp(1.15rem, 2.5vw, 1.65rem);
+    overflow-wrap: anywhere;
+}
+
+.gm-album-count {
+    margin: 7px 0 0;
+    color: rgba(220, 211, 255, 0.65);
+    font-size: 0.9rem;
+}
+
+.gm-album-close {
+    flex: 0 0 auto;
+    min-width: 42px;
+    min-height: 42px;
+    border: 1px solid rgba(180, 138, 255, 0.32);
+    border-radius: 12px;
+    color: #e8dcff;
+    background: rgba(132, 83, 255, 0.12);
+    cursor: pointer;
+    font-size: 1.25rem;
+    transition: background 180ms ease, border-color 180ms ease;
+}
+
+.gm-album-close:hover {
+    border-color: rgba(180, 138, 255, 0.75);
+    background: rgba(132, 83, 255, 0.25);
+}
+
+.gm-album-viewer {
+    position: relative;
+    display: grid;
+    grid-template-columns: 48px minmax(0, 1fr) 48px;
+    align-items: center;
+    gap: 12px;
+    min-height: 220px;
+}
+
+.gm-album-main-image-wrap {
+    display: grid;
+    place-items: center;
+    min-width: 0;
+    min-height: 220px;
+    overflow: hidden;
+    border-radius: 14px;
+    background: rgba(0, 0, 0, 0.25);
+}
+
+.gm-album-main-image {
+    display: block;
+    max-width: 100%;
+    width: auto;
+    height: auto;
+    max-height: min(68vh, 760px);
+    object-fit: contain;
+}
+
+.gm-album-arrow {
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 54px;
+    border: 1px solid rgba(180, 138, 255, 0.3);
+    border-radius: 13px;
+    color: #eee5ff;
+    background: rgba(132, 83, 255, 0.13);
+    cursor: pointer;
+    font-size: 1.55rem;
+    transition: background 180ms ease, transform 180ms ease;
+}
+
+.gm-album-arrow:hover {
+    transform: scale(1.05);
+    background: rgba(132, 83, 255, 0.28);
+}
+
+.gm-album-caption {
+    min-height: 24px;
+    margin: 12px 0 18px;
+    color: rgba(220, 211, 255, 0.7);
+    text-align: center;
+    font-size: 0.88rem;
+}
+
+.gm-album-thumbnails {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(82px, 1fr));
+    gap: 10px;
+}
+
+.gm-album-thumb {
+    display: block;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    padding: 0;
+    overflow: hidden;
+    border: 2px solid transparent;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.06);
+    cursor: pointer;
+    opacity: 0.72;
+    transition: opacity 160ms ease, border-color 160ms ease, transform 160ms ease;
+}
+
+.gm-album-thumb:hover {
+    opacity: 1;
+    transform: translateY(-2px);
+}
+
+.gm-album-thumb.is-active {
+    border-color: #b48aff;
+    opacity: 1;
+    box-shadow: 0 0 0 2px rgba(180, 138, 255, 0.15);
+}
+
+.gm-album-thumb img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+[hidden] {
+    display: none !important;
+}
+
+@media (max-width: 600px) {
+    .gm-event-list {
+        grid-template-columns: 1fr;
+        gap: 14px;
+    }
+
+    .gm-event-card {
+        min-height: 145px;
+    }
+
+    .gm-album-header {
+        align-items: flex-start;
+    }
+
+    .gm-album-viewer {
+        grid-template-columns: 38px minmax(0, 1fr) 38px;
+        gap: 6px;
+    }
+
+    .gm-album-arrow {
+        width: 36px;
+        height: 46px;
+    }
+
+    .gm-album-main-image-wrap {
+        min-height: 170px;
+    }
+
+    .gm-album-main-image {
+        max-height: 55vh;
+    }
+
+    .gm-album-thumbnails {
+        grid-template-columns: repeat(auto-fill, minmax(64px, 1fr));
+        gap: 7px;
+    }
+}
