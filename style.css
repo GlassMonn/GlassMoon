@@ -1,759 +1,1170 @@
-/* =========================================================
-   GLASS MOON STUDIO – Éjsötét, lilás-kékes, üveges téma v2
-   Különálló stíluslap (osztálynevek változatlanok)
-========================================================= */
+/* ==========================================================================
+   GLASS MOON STUDIOS – DARK LUXURY + PURPLE GLASSMORPHISM + CINEMATIC DESIGN
+   Teljesen újratervezett, reszponzív (Mobile-First) stíluslap
+   ========================================================================== */
 
 :root {
-    /* Színek */
-    --accent: #A78BFA;
-    --accent-strong: #8B5CF6;
-    --accent-blue: #5EA2FF;
-    --accent-indigo: #6D5DFB;
-    --background: #03020A;
-    --background-secondary: #050316;
-    --text: #F6F3FF;
-    --text-muted: #D0C8EE;
-    --text-secondary: #9E94C8;
+    /* Színvilág */
+    --bg-void: #08070D;
+    --bg-plum: #171024;
+    --violet-deep: #54258A;
+    --violet-glow: #A970FF;
+    --violet-soft: #CBB2FF;
 
-    /* Üveg */
-    --border: rgba(255, 255, 255, 0.10);
-    --border-strong: rgba(196, 181, 253, 0.32);
-    --glass: rgba(255, 255, 255, 0.05);
-    --glass-strong: rgba(255, 255, 255, 0.08);
-    --glass-dark: rgba(6, 4, 22, 0.55);
-    --blur: blur(24px) saturate(170%);
-    --highlight: inset 0 1px 0 rgba(255, 255, 255, 0.12);
-    --shadow-glass: 0 20px 60px -12px rgba(0, 0, 0, 0.6), var(--highlight);
-    --glow-shadow: 0 24px 70px -10px rgba(109, 93, 251, 0.45);
+    /* Szövegek */
+    --text-primary: #F7F5FC;
+    --text-secondary: #B9B2C9;
+    --text-muted: #7F7694;
 
-    /* Vékony, színátmenetes "üvegél" */
-    --edge: linear-gradient(145deg,
-            rgba(255, 255, 255, .34) 0%,
-            rgba(167, 139, 250, .16) 30%,
-            rgba(255, 255, 255, .04) 60%,
-            rgba(94, 162, 255, .26) 100%);
-    --edge-hover: linear-gradient(145deg,
-            rgba(255, 255, 255, .55) 0%,
-            rgba(167, 139, 250, .5) 40%,
-            rgba(94, 162, 255, .5) 100%);
+    /* Glassmorphism rétegek */
+    --glass-surface: rgba(23, 16, 36, 0.56);
+    --glass-surface-strong: rgba(23, 16, 36, 0.82);
+    --glass-surface-light: rgba(169, 112, 255, 0.06);
+    --glass-border: rgba(255, 255, 255, 0.10);
+    --glass-border-highlight: rgba(169, 112, 255, 0.34);
+    --glass-blur: blur(20px) saturate(145%);
+    --glass-shadow: 0 24px 48px -12px rgba(0, 0, 0, 0.65),
+                    inset 0 1px 0 0 rgba(255, 255, 255, 0.12);
+    --glass-shadow-hover: 0 28px 60px -12px rgba(84, 37, 138, 0.42),
+                          inset 0 1px 0 0 rgba(255, 255, 255, 0.22);
 
-    /* Formák és mozgás */
-    --radius-s: 14px;
-    --radius-m: 26px;
-    --radius-l: 36px;
-    --ease: cubic-bezier(.22, .8, .2, 1);
+    /* Elrendezés & Méretek */
+    --container-max: 1240px;
+    --radius-sm: 12px;
+    --radius-md: 20px;
+    --radius-lg: 28px;
+    --radius-pill: 999px;
+
+    /* Tipográfia */
+    --font-display: 'Space Grotesk', system-ui, -apple-system, sans-serif;
+    --font-serif: 'Cinzel', Georgia, serif;
+    --font-body: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+
+    /* Mozgás */
+    --ease-cinematic: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-* {
+/* --------------------------------------------------------------------------
+   1. ALAPBEÁLLÍTÁSOK & RESET
+   -------------------------------------------------------------------------- */
+*,
+*::before,
+*::after {
     box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
 
 html {
     scroll-behavior: smooth;
-    scroll-padding-top: 24px;
+    scroll-padding-top: 96px;
     color-scheme: dark;
-    scrollbar-color: #3B2A7A #03020A;
-    scrollbar-width: thin;
+    -webkit-text-size-adjust: 100%;
+    -webkit-tap-highlight-color: transparent;
 }
 
 body {
-    position: relative;
-    margin: 0;
-    background: var(--background);
-    color: var(--text);
-    font-family: Inter, system-ui, -apple-system, "Segoe UI", sans-serif;
+    background-color: var(--bg-void);
+    color: var(--text-primary);
+    font-family: var(--font-body);
     font-size: 16px;
     line-height: 1.65;
-    font-feature-settings: "ss01", "cv11";
+    overflow-x: hidden;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    text-rendering: optimizeLegibility;
 }
 
-/* Finom filmszemcse az egész oldalon – mélységet ad, megszünteti a "lapos" sötétet */
-
-body::after {
-    content: "";
-    position: fixed;
-    inset: 0;
-    z-index: 100;
-    pointer-events: none;
-    opacity: .05;
-    mix-blend-mode: overlay;
-    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 .9 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
-}
-
-h1, h2, h3 {
-    margin: 0;
-    font-family: "Space Grotesk", system-ui, sans-serif;
-    letter-spacing: -0.03em;
-    text-wrap: balance;
-}
-
-p {
-    margin: 0;
-    text-wrap: pretty;
+img,
+svg,
+iframe {
+    display: block;
+    max-width: 100%;
 }
 
 a {
     color: inherit;
     text-decoration: none;
-    transition: opacity .25s var(--ease), transform .25s var(--ease), background .25s var(--ease), color .25s var(--ease);
 }
 
-a:hover {
-    opacity: .92;
+button,
+input,
+select,
+textarea {
+    font: inherit;
+    color: inherit;
 }
 
 button {
-    color: inherit;
-    font: inherit;
+    background: none;
+    border: none;
+    cursor: pointer;
 }
 
-a:focus-visible,
-button:focus-visible {
-    outline: 2px solid #C4B5FD;
+:focus-visible {
+    outline: 2px solid var(--violet-glow);
     outline-offset: 3px;
 }
 
 ::selection {
-    background: #7C3AED;
-    color: #fff;
+    background-color: var(--violet-deep);
+    color: #ffffff;
 }
 
-::-webkit-scrollbar {
-    width: 10px;
-}
-
-::-webkit-scrollbar-track {
-    background: #03020A;
-}
-
-::-webkit-scrollbar-thumb {
-    border: 2px solid #03020A;
-    border-radius: 999px;
-    background: linear-gradient(180deg, #6D4AE0, #3B5BDB);
-}
-
-/* ---------------------------------------------------------
-   Üvegél (gradiens hajszálkeret) – közös minden üveg elemre
---------------------------------------------------------- */
-
-.gm-header,
-.gm-hero-feature,
-.gm-glass-caption,
-.gm-event,
-.gm-album,
-.gm-video-frame,
-.gm-contact-card,
-.gm-gallery-item,
-.gm-button-secondary {
-    position: relative;
-}
-
-.gm-glass-caption {
-    position: absolute;
-}
-
-.gm-header::before,
-.gm-hero-feature::before,
-.gm-glass-caption::before,
-.gm-event::before,
-.gm-album::before,
-.gm-video-frame::before,
-.gm-contact-card::before,
-.gm-gallery-item::before,
-.gm-button-secondary::before {
-    content: "";
-    position: absolute;
+/* --------------------------------------------------------------------------
+   2. HÁTTÉR ATMOSZFÉRA & HOLDMOTÍVUM
+   -------------------------------------------------------------------------- */
+.ambient-canvas {
+    position: fixed;
     inset: 0;
-    z-index: 2;
-    padding: 1px;
-    border-radius: inherit;
-    background: var(--edge);
+    z-index: 0;
     pointer-events: none;
-    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-    -webkit-mask-composite: xor;
-    mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
-    transition: background .4s var(--ease);
-}
-
-.gm-event:hover::before,
-.gm-contact-card:hover::before,
-.gm-gallery-item:hover::before,
-.gm-button-secondary:hover::before {
-    background: var(--edge-hover);
-}
-
-/* ---------------------------------------------------------
-   Oldal és szekciók
---------------------------------------------------------- */
-
-.gm-page {
-    width: 100%;
-    min-height: 100vh;
     overflow: hidden;
-    background: var(--background);
-    color: var(--text);
+    background: radial-gradient(circle at 50% 0%, #140D22 0%, var(--bg-void) 70%);
 }
 
-.gm-section {
-    position: relative;
-    overflow: hidden;
-}
-
-.gm-hero,
-.gm-events,
-.gm-contact {
-    background:
-        radial-gradient(1200px 640px at 50% -12%, rgba(109, 93, 251, .14), transparent 70%),
-        var(--background);
-}
-
-.gm-gallery,
-.gm-video {
-    background:
-        radial-gradient(1100px 560px at 50% 115%, rgba(124, 58, 237, .13), transparent 70%),
-        var(--background-secondary);
-}
-
-/* Finom pontrács a hero mögött */
-
-.gm-hero::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-    background-image: radial-gradient(rgba(196, 181, 253, .28) 1px, transparent 1.4px);
-    background-size: 34px 34px;
-    -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 40%, #000 20%, transparent 75%);
-    mask-image: radial-gradient(ellipse 70% 60% at 50% 40%, #000 20%, transparent 75%);
-    opacity: .35;
-}
-
-/* Aurora fények */
-
-.gm-glow {
+.ambient-orb {
     position: absolute;
     border-radius: 50%;
-    pointer-events: none;
-    filter: blur(50px);
-    opacity: .95;
-    animation: gm-float 20s ease-in-out infinite alternate;
+    filter: blur(110px);
+    opacity: 0.45;
+    will-change: transform;
+    animation: orbFloat 22s ease-in-out infinite alternate;
 }
 
-@keyframes gm-float {
-    from { transform: translate3d(0, 0, 0) scale(1); }
-    to   { transform: translate3d(40px, -30px, 0) scale(1.1); }
+.orb-1 {
+    width: 480px;
+    height: 480px;
+    top: -120px;
+    right: -100px;
+    background: radial-gradient(circle, var(--violet-deep) 0%, transparent 70%);
 }
 
-.gm-glow-hero-right {
-    width: 720px;
-    height: 720px;
-    right: -240px;
-    top: -220px;
-    background: radial-gradient(circle, rgba(139, 92, 246, .6), transparent 65%);
-}
-
-.gm-glow-hero-left {
-    width: 600px;
-    height: 600px;
-    left: -260px;
-    bottom: -200px;
-    background: radial-gradient(circle, rgba(59, 130, 246, .42), transparent 65%);
+.orb-2 {
+    width: 560px;
+    height: 560px;
+    top: 42%;
+    left: -180px;
+    background: radial-gradient(circle, rgba(84, 37, 138, 0.65) 0%, transparent 70%);
     animation-delay: -7s;
 }
 
-.gm-glow-gallery {
-    width: 600px;
-    height: 600px;
-    left: -220px;
-    top: 20px;
-    background: radial-gradient(circle, rgba(124, 58, 237, .4), transparent 65%);
+.orb-3 {
+    width: 440px;
+    height: 440px;
+    bottom: -100px;
+    right: 10%;
+    background: radial-gradient(circle, rgba(169, 112, 255, 0.25) 0%, transparent 70%);
+    animation-delay: -14s;
 }
 
-.gm-glow-events {
-    width: 640px;
-    height: 640px;
-    right: -260px;
-    top: 40px;
-    background: radial-gradient(circle, rgba(99, 102, 241, .45), transparent 65%);
-    animation-delay: -4s;
+.moon-crescent {
+    position: absolute;
+    top: 14%;
+    right: 8%;
+    width: 240px;
+    height: 240px;
+    border-radius: 50%;
+    box-shadow: -22px 14px 0 0 rgba(169, 112, 255, 0.07);
+    filter: drop-shadow(0 0 32px rgba(169, 112, 255, 0.14));
+    transform: rotate(-18deg);
+    opacity: 0.85;
 }
 
-.gm-glow-video {
-    width: 640px;
-    height: 640px;
-    left: -240px;
-    bottom: -240px;
-    background: radial-gradient(circle, rgba(59, 130, 246, .38), transparent 65%);
-    animation-delay: -10s;
+@keyframes orbFloat {
+    0%   { transform: translate3d(0, 0, 0) scale(1); }
+    50%  { transform: translate3d(25px, -30px, 0) scale(1.06); }
+    100% { transform: translate3d(-20px, 20px, 0) scale(0.96); }
 }
 
-.gm-glow-contact {
-    width: 720px;
-    height: 720px;
-    right: -280px;
-    bottom: -300px;
-    background: radial-gradient(circle, rgba(139, 92, 246, .48), transparent 65%);
+/* --------------------------------------------------------------------------
+   3. KÖZÖS GLASSMORPHISM OSZTÁLYOK & TIPÓGRÁFIA
+   -------------------------------------------------------------------------- */
+.glass-panel {
+    background: linear-gradient(145deg, rgba(28, 20, 44, 0.66) 0%, rgba(16, 12, 26, 0.54) 100%);
+    border: 1px solid var(--glass-border);
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
+    box-shadow: var(--glass-shadow);
 }
 
-/* ---------------------------------------------------------
-   Fejléc – lebegő üveg-pill
---------------------------------------------------------- */
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+    .glass-panel {
+        background: rgba(23, 16, 36, 0.94);
+    }
+}
 
-.gm-header-wrap {
+.container {
     position: relative;
-    z-index: 3;
+    z-index: 2;
     width: 100%;
-    max-width: 1200px;
+    max-width: var(--container-max);
     margin: 0 auto;
-    padding: 18px 16px 0;
+    padding: 0 20px;
 }
 
-.gm-header {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: space-between;
-    gap: 12px 24px;
-    padding: 10px 14px 10px 24px;
-    border-radius: 999px;
-    background: linear-gradient(135deg, rgba(255, 255, 255, .09), rgba(255, 255, 255, .03));
-    backdrop-filter: var(--blur);
-    -webkit-backdrop-filter: var(--blur);
-    box-shadow: var(--shadow-glass);
-}
-
-.gm-logo {
-    display: flex;
-    align-items: center;
-}
-
-.gm-logo img {
-    display: block;
-    width: auto;
-    max-width: 100%;
-    height: 60px;
-    object-fit: contain;
-}
-
-.gm-nav {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 2px;
-    padding: 4px;
-    border-radius: 999px;
-    background: rgba(255, 255, 255, .04);
-    color: var(--text-muted);
-    font-size: 14.5px;
-    font-weight: 500;
-}
-
-.gm-nav a {
-    padding: 9px 18px;
-    border-radius: 999px;
-}
-
-.gm-nav a:hover {
-    background: rgba(167, 139, 250, .2);
-    color: #fff;
-    opacity: 1;
-}
-
-/* ---------------------------------------------------------
-   Hero
---------------------------------------------------------- */
-
-.gm-hero-content {
+.section {
     position: relative;
-    z-index: 1;
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 64px;
-    width: 100%;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: clamp(48px, 9vw, 88px) 24px clamp(64px, 11vw, 112px);
+    z-index: 2;
+    padding: 84px 0;
 }
 
-.gm-hero-text {
-    display: flex;
-    flex: 1 1 380px;
-    min-width: 0;
-    flex-direction: column;
-    gap: 26px;
-}
-
-/* Eyebrow = üveg "chip" */
-
-.gm-eyebrow {
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-    align-self: flex-start;
-    padding: 7px 16px 7px 14px;
-    border: 1px solid rgba(167, 139, 250, .28);
-    border-radius: 999px;
-    background: rgba(167, 139, 250, .10);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    color: #D9CEFF;
+.section-kicker {
+    display: inline-block;
+    font-family: var(--font-display);
     font-size: 12px;
     font-weight: 600;
-    letter-spacing: .2em;
+    letter-spacing: 0.22em;
     text-transform: uppercase;
+    color: var(--violet-glow);
+    margin-bottom: 12px;
 }
 
-.gm-eyebrow::before {
-    content: "";
-    width: 7px;
-    height: 7px;
-    border-radius: 50%;
-    background: linear-gradient(135deg, var(--accent), var(--accent-blue));
-    box-shadow: 0 0 12px 2px rgba(139, 92, 246, .8);
-    animation: gm-pulse 2.8s ease-in-out infinite;
+.section-title {
+    font-family: var(--font-display);
+    font-size: clamp(28px, 5vw, 46px);
+    font-weight: 700;
+    line-height: 1.14;
+    letter-spacing: -0.025em;
+    color: var(--text-primary);
 }
 
-@keyframes gm-pulse {
-    0%, 100% { opacity: 1; transform: scale(1); }
-    50%      { opacity: .55; transform: scale(.8); }
+.section-subtitle {
+    margin-top: 14px;
+    max-width: 580px;
+    color: var(--text-secondary);
+    font-size: 16.5px;
 }
 
-.gm-hero-text h1 {
-    background: linear-gradient(180deg, #FFFFFF 0%, #D6CCFF 55%, #8FA8FF 130%);
+.section-header {
+    margin-bottom: 48px;
+}
+
+.section-header.center {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.text-gradient {
+    background: linear-gradient(120deg, #FFFFFF 0%, var(--violet-soft) 45%, var(--violet-glow) 100%);
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
-    color: #fff;
-    font-size: clamp(40px, 9vw, 76px);
-    font-weight: 700;
-    line-height: 1;
-    letter-spacing: -0.045em;
 }
 
-.gm-hero-description {
-    max-width: 520px;
-    color: var(--text-muted);
-    font-size: clamp(17px, 2.2vw, 19px);
-    line-height: 1.7;
-}
-
-.gm-buttons {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 14px;
-    padding-top: 10px;
-}
-
-.gm-button {
-    position: relative;
+.btn {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    min-height: 52px;
-    padding: 0 32px;
-    border: 0;
-    border-radius: 999px;
-    font-size: 15px;
+    gap: 10px;
+    min-height: 48px;
+    padding: 0 26px;
+    border-radius: var(--radius-pill);
+    font-family: var(--font-display);
+    font-size: 14.5px;
     font-weight: 600;
-    letter-spacing: .005em;
+    letter-spacing: 0.02em;
+    transition: transform 0.35s var(--ease-cinematic),
+                box-shadow 0.35s var(--ease-cinematic),
+                background 0.35s var(--ease-cinematic),
+                border-color 0.35s var(--ease-cinematic);
+}
+
+.btn:active {
+    transform: scale(0.97);
+}
+
+.btn-sm {
+    min-height: 40px;
+    padding: 0 18px;
+    font-size: 13.5px;
+}
+
+.btn-full {
+    width: 100%;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, var(--violet-deep) 0%, #6D35B0 55%, var(--violet-glow) 100%);
+    color: #ffffff;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    box-shadow: 0 12px 30px -8px rgba(84, 37, 138, 0.75);
+}
+
+.btn-glass {
+    background: rgba(255, 255, 255, 0.04);
+    color: var(--text-primary);
+    border: 1px solid var(--glass-border);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+}
+
+/* --------------------------------------------------------------------------
+   4. NAVIGÁCIÓ & MOBIL HAMBURGER MENÜ
+   -------------------------------------------------------------------------- */
+.site-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    padding: 14px 16px;
+    transition: padding 0.35s var(--ease-cinematic);
+}
+
+.site-header.scrolled {
+    padding: 8px 16px;
+}
+
+.header-inner {
+    max-width: var(--container-max);
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 10px 16px 10px 20px;
+    border-radius: var(--radius-pill);
+    transition: background 0.35s ease, border-color 0.35s ease;
+}
+
+.site-header.scrolled .header-inner {
+    background: rgba(14, 10, 24, 0.85);
+    border-color: rgba(169, 112, 255, 0.22);
+}
+
+.brand-logo {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.brand-logo img {
+    height: 55px;
+    width: auto;
+    object-fit: contain;
+}
+
+.brand-wordmark {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 16px;
+    letter-spacing: 0.08em;
+    color: var(--text-primary);
+}
+
+.brand-wordmark small {
+    font-weight: 400;
+    font-size: 12px;
+    color: var(--violet-glow);
+    letter-spacing: 0.16em;
+}
+
+.moon-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    box-shadow: -3px 1px 0 0 var(--violet-glow);
+    display: inline-block;
+}
+
+.desktop-nav {
+    display: none;
+    align-items: center;
+    gap: 6px;
+}
+
+.nav-link {
+    position: relative;
+    padding: 8px 16px;
+    border-radius: var(--radius-pill);
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-secondary);
+    transition: color 0.3s ease, background 0.3s ease;
+}
+
+.nav-link.active {
+    color: #ffffff;
+    background: rgba(169, 112, 255, 0.14);
+}
+
+.nav-link.active::after {
+    content: "";
+    position: absolute;
+    bottom: 4px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: var(--violet-glow);
+}
+
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.header-actions .btn-sm {
+    display: none;
+}
+
+.hamburger-btn {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--glass-border);
+}
+
+.hamburger-btn span {
+    width: 20px;
+    height: 1.8px;
+    background: var(--text-primary);
+    border-radius: 2px;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.mobile-drawer {
+    position: fixed;
+    inset: 0;
+    z-index: 200;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.35s var(--ease-cinematic);
+}
+
+.mobile-drawer.open {
+    pointer-events: auto;
+    opacity: 1;
+}
+
+.mobile-drawer-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(5, 4, 10, 0.78);
+    backdrop-filter: blur(8px);
+}
+
+.mobile-drawer-content {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    bottom: 12px;
+    width: min(340px, calc(100vw - 24px));
+    border-radius: var(--radius-lg);
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transform: translateX(30px);
+    transition: transform 0.4s var(--ease-cinematic);
+}
+
+.mobile-drawer.open .mobile-drawer-content {
+    transform: translateX(0);
+}
+
+.mobile-drawer-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--glass-border);
+}
+
+.drawer-close {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    font-size: 26px;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.mobile-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin: auto 0;
+}
+
+.mobile-link {
+    padding: 14px 16px;
+    border-radius: var(--radius-sm);
+    font-family: var(--font-display);
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--text-secondary);
+    transition: background 0.25s ease, color 0.25s ease;
+}
+
+.mobile-link.active,
+.mobile-link:active {
+    background: rgba(169, 112, 255, 0.14);
+    color: #ffffff;
+}
+
+.mobile-drawer-footer {
+    padding-top: 16px;
+    border-top: 1px solid var(--glass-border);
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.slogan-mini {
+    font-family: var(--font-serif);
+    font-size: 13px;
+    color: var(--text-muted);
     text-align: center;
-    cursor: pointer;
-    transition: transform .3s var(--ease), box-shadow .3s var(--ease), background-position .6s var(--ease), background .3s var(--ease);
 }
 
-.gm-button:hover {
-    transform: translateY(-2px);
-}
-
-.gm-button:active {
-    transform: translateY(0) scale(.97);
-}
-
-.gm-button-primary {
-    background: linear-gradient(110deg, #B49CFF 0%, #7C8CF8 45%, #5EA2FF 100%);
-    background-size: 160% 100%;
-    background-position: 0% 0;
-    color: #0A0620;
-    box-shadow: 0 10px 30px -6px rgba(124, 140, 248, .55), inset 0 1px 0 rgba(255, 255, 255, .5);
-}
-
-.gm-button-primary:hover {
-    background-position: 100% 0;
-    box-shadow: 0 16px 44px -6px rgba(124, 140, 248, .75), inset 0 1px 0 rgba(255, 255, 255, .55);
-}
-
-.gm-button-secondary {
-    background: var(--glass-strong);
-    backdrop-filter: var(--blur);
-    -webkit-backdrop-filter: var(--blur);
-    box-shadow: var(--highlight);
-}
-
-.gm-button-secondary:hover {
-    background: rgba(167, 139, 250, .16);
-}
-
-.gm-hero-feature {
-    flex: 1 1 380px;
-    min-width: 0;
-    min-height: 500px;
+/* --------------------------------------------------------------------------
+   5. HERO SZEKCIÓ
+   -------------------------------------------------------------------------- */
+.hero-section {
+    position: relative;
+    min-height: 100svh;
+    display: flex;
+    align-items: center;
+    padding: 120px 0 72px;
     overflow: hidden;
-    border-radius: var(--radius-l);
-    background: linear-gradient(155deg, #6D3FE0 0%, #2A1670 48%, #0A0624 100%);
-    box-shadow: 0 40px 100px -20px rgba(0, 0, 0, .7), 0 0 100px rgba(99, 102, 241, .25);
 }
 
-.gm-hero-feature-image {
+.hero-bg-layer {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    overflow: hidden;
+}
+
+.hero-bg-image {
+    position: absolute;
+    inset: -5%;
+    background-size: cover;
+    background-position: center;
+    opacity: 0.22;
+    filter: blur(8px) saturate(110%);
+    transform: scale(1.05);
+}
+
+.hero-vignette {
+    position: absolute;
+    inset: 0;
+    background:
+        radial-gradient(circle at 70% 35%, rgba(84, 37, 138, 0.28) 0%, transparent 55%),
+        linear-gradient(180deg, rgba(8, 7, 13, 0.65) 0%, rgba(8, 7, 13, 0.85) 65%, var(--bg-void) 100%);
+}
+
+.hero-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 44px;
+    align-items: center;
+}
+
+.eyebrow-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 7px 16px;
+    border-radius: var(--radius-pill);
+    background: rgba(23, 16, 36, 0.72);
+    border: 1px solid rgba(169, 112, 255, 0.28);
+    font-family: var(--font-display);
+    font-size: 11.5px;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    color: var(--violet-soft);
+    margin-bottom: 22px;
+}
+
+.pulse-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--violet-glow);
+    box-shadow: 0 0 10px var(--violet-glow);
+    animation: gentlePulse 2.8s ease-in-out infinite;
+}
+
+@keyframes gentlePulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50%      { opacity: 0.45; transform: scale(0.8); }
+}
+
+.hero-title {
+    font-family: var(--font-display);
+    font-size: clamp(42px, 8.5vw, 82px);
+    font-weight: 700;
+    line-height: 0.98;
+    letter-spacing: -0.035em;
+    margin-bottom: 18px;
+}
+
+.hero-slogan {
+    font-family: var(--font-serif);
+    font-size: clamp(18px, 3vw, 24px);
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    color: var(--violet-soft);
+    margin-bottom: 18px;
+}
+
+.hero-lead {
+    max-width: 540px;
+    color: var(--text-secondary);
+    font-size: clamp(15.5px, 2vw, 17.5px);
+    margin-bottom: 32px;
+}
+
+.hero-cta-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+}
+
+.showcase-card {
+    border-radius: var(--radius-lg);
+    padding: 14px;
+    transition: transform 0.5s var(--ease-cinematic), box-shadow 0.5s var(--ease-cinematic);
+}
+
+.showcase-frame {
+    position: relative;
+    border-radius: calc(var(--radius-lg) - 8px);
+    overflow: hidden;
+    aspect-ratio: 4 / 3;
+    background: var(--bg-plum);
+}
+
+.showcase-frame img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.9s var(--ease-cinematic);
+}
+
+.frame-overlay {
+    position: absolute;
+    top: 14px;
+    left: 14px;
+    right: 14px;
+    display: flex;
+    justify-content: space-between;
+    pointer-events: none;
+}
+
+.rec-indicator {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 12px;
+    border-radius: var(--radius-pill);
+    background: rgba(8, 7, 13, 0.72);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(10px);
+    font-family: var(--font-display);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    color: var(--text-primary);
+}
+
+.rec-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--violet-glow);
+    display: inline-block;
+}
+
+.showcase-meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    padding: 16px 8px 6px;
+}
+
+.meta-tag {
+    display: block;
+    font-family: var(--font-display);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    color: var(--violet-glow);
+    margin-bottom: 4px;
+}
+
+.showcase-meta h3 {
+    font-family: var(--font-display);
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.icon-circle-btn {
+    width: 44px;
+    height: 44px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(169, 112, 255, 0.14);
+    border: 1px solid rgba(169, 112, 255, 0.3);
+    color: var(--text-primary);
+    transition: transform 0.3s ease, background 0.3s ease;
+}
+
+/* --------------------------------------------------------------------------
+   6. RÓLUNK SZEKCIÓ
+   -------------------------------------------------------------------------- */
+.about-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 48px;
+    align-items: center;
+}
+
+.about-glass-stack {
+    position: relative;
+    padding-bottom: 24px;
+}
+
+.about-main-img {
+    border-radius: var(--radius-lg);
+    padding: 12px;
+    overflow: hidden;
+}
+
+.about-main-img img {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    border-radius: calc(var(--radius-lg) - 8px);
+}
+
+.about-floating-badge {
+    position: relative;
+    margin: -36px 16px 0 auto;
+    max-width: 310px;
+    padding: 16px 20px;
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    border-color: var(--glass-border-highlight);
+}
+
+.moon-icon-wrap {
+    width: 46px;
+    height: 46px;
+    flex-shrink: 0;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, rgba(84, 37, 138, 0.6), rgba(169, 112, 255, 0.25));
+    color: var(--violet-soft);
+}
+
+.about-floating-badge strong {
+    display: block;
+    font-family: var(--font-display);
+    font-size: 15px;
+    color: var(--text-primary);
+}
+
+.about-floating-badge span {
+    font-size: 13px;
+    color: var(--text-secondary);
+}
+
+.about-text .section-title {
+    margin-bottom: 22px;
+}
+
+.about-paragraph {
+    color: var(--text-secondary);
+    margin-bottom: 18px;
+}
+
+.about-paragraph strong {
+    color: var(--text-primary);
+    font-weight: 600;
+}
+
+.about-pillars {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 14px;
+    margin-top: 28px;
+}
+
+.pillar-item {
+    padding: 18px 20px;
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+}
+
+.pillar-num {
+    font-family: var(--font-display);
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--violet-glow);
+    padding-top: 2px;
+}
+
+.pillar-item h4 {
+    font-family: var(--font-display);
+    font-size: 16px;
+    margin-bottom: 4px;
+}
+
+.pillar-item p {
+    font-size: 14px;
+    color: var(--text-secondary);
+}
+
+/* --------------------------------------------------------------------------
+   7. SZOLGÁLTATÁSOK SZEKCIÓ
+   -------------------------------------------------------------------------- */
+.services-bento {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+}
+
+.service-card {
+    position: relative;
+    overflow: hidden;
+    border-radius: var(--radius-md);
+    padding: 30px 26px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    transition: transform 0.45s var(--ease-cinematic),
+                border-color 0.45s var(--ease-cinematic),
+                box-shadow 0.45s var(--ease-cinematic);
+}
+
+.service-glow {
+    position: absolute;
+    top: -60px;
+    right: -60px;
+    width: 160px;
+    height: 160px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(169, 112, 255, 0.22) 0%, transparent 70%);
+    pointer-events: none;
+    transition: transform 0.5s ease, opacity 0.5s ease;
+    opacity: 0.6;
+}
+
+.service-icon {
+    width: 52px;
+    height: 52px;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(169, 112, 255, 0.1);
+    border: 1px solid rgba(169, 112, 255, 0.25);
+    color: var(--violet-soft);
+}
+
+.service-card h3 {
+    font-family: var(--font-display);
+    font-size: 21px;
+    font-weight: 600;
+}
+
+.service-card p {
+    color: var(--text-secondary);
+    font-size: 15px;
+    flex-grow: 1;
+}
+
+.service-tag {
+    display: inline-block;
+    margin-top: 6px;
+    font-family: var(--font-display);
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    color: var(--violet-glow);
+}
+
+.featured-service {
+    border-color: rgba(169, 112, 255, 0.28);
+    background: linear-gradient(145deg, rgba(46, 24, 82, 0.68) 0%, rgba(18, 12, 30, 0.62) 100%);
+}
+
+/* --------------------------------------------------------------------------
+   8. PORTFÓLIÓ, GALÉRIA, VIDEÓ & ESEMÉNYEK
+   -------------------------------------------------------------------------- */
+.header-row {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.filter-bar {
+    display: inline-flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    padding: 6px;
+    border-radius: var(--radius-pill);
+    align-self: flex-start;
+}
+
+.filter-btn {
+    padding: 8px 18px;
+    border-radius: var(--radius-pill);
+    font-family: var(--font-display);
+    font-size: 13.5px;
+    font-weight: 500;
+    color: var(--text-secondary);
+    transition: background 0.3s ease, color 0.3s ease;
+}
+
+.filter-btn.active {
+    background: var(--violet-deep);
+    color: #ffffff;
+    box-shadow: 0 4px 16px rgba(84, 37, 138, 0.5);
+}
+
+.masonry-portfolio {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+}
+
+.portfolio-item {
+    position: relative;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    aspect-ratio: 4 / 3;
+    background: var(--bg-plum);
+    border: 1px solid var(--glass-border);
+    cursor: pointer;
+    transition: transform 0.45s var(--ease-cinematic),
+                box-shadow 0.45s var(--ease-cinematic),
+                opacity 0.35s ease;
+}
+
+.portfolio-item.hidden-item {
+    display: none;
+}
+
+.portfolio-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.8s var(--ease-cinematic);
+}
+
+.portfolio-overlay {
+    position: absolute;
+    inset: 0;
+    padding: 22px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    background: linear-gradient(180deg, transparent 40%, rgba(8, 7, 13, 0.88) 100%);
+    transition: background 0.4s ease;
+}
+
+.item-cat {
+    font-family: var(--font-display);
+    font-size: 11.5px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--violet-glow);
+    margin-bottom: 4px;
+}
+
+.portfolio-overlay h3 {
+    font-family: var(--font-display);
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.lightbox-trigger {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(23, 16, 36, 0.72);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    backdrop-filter: blur(10px);
+    color: #ffffff;
+    transition: transform 0.3s ease, background 0.3s ease;
+}
+
+.video-showcase-block {
+    margin-top: 56px;
+    border-radius: var(--radius-lg);
+    padding: 18px;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 28px;
+    align-items: center;
+}
+
+.video-embed-wrapper {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    border-radius: calc(var(--radius-lg) - 10px);
+    overflow: hidden;
+    background: #050409;
+    border: 1px solid var(--glass-border);
+}
+
+.video-embed-wrapper iframe {
     position: absolute;
     inset: 0;
     width: 100%;
     height: 100%;
-    background-image: url("./assets/kiemelt.jpeg");
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    border-radius: inherit;
-    transition: transform 1s var(--ease);
+    border: 0;
 }
 
-.gm-hero-feature:hover .gm-hero-feature-image {
-    transform: scale(1.05);
+.video-info-panel {
+    padding: 6px 8px 12px;
 }
 
-.gm-hero-feature::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    border-radius: inherit;
-    background:
-        linear-gradient(180deg, rgba(109, 93, 251, .12) 0%, transparent 35%),
-        linear-gradient(180deg, transparent 50%, rgba(3, 2, 10, .65));
-    pointer-events: none;
+.video-info-panel h3 {
+    font-family: var(--font-display);
+    font-size: clamp(24px, 4vw, 32px);
+    margin-bottom: 12px;
 }
 
-.gm-glass-caption {
-    z-index: 3;
-    right: 22px;
-    bottom: 22px;
-    left: 22px;
-    padding: 18px 22px;
-    border-radius: 24px;
-    background: linear-gradient(135deg, rgba(255, 255, 255, .15), rgba(255, 255, 255, .05));
-    backdrop-filter: var(--blur);
-    -webkit-backdrop-filter: var(--blur);
-    box-shadow: var(--highlight), 0 12px 40px rgba(0, 0, 0, .35);
+.video-info-panel p {
+    color: var(--text-secondary);
+    margin-bottom: 24px;
 }
 
-.gm-caption-eyebrow {
-    color: #E4DBFF;
-    font-size: 12px;
-    letter-spacing: .16em;
-    text-transform: uppercase;
+/* Események & Google Drive Album konténer */
+.events-archive-block {
+    margin-top: 64px;
 }
 
-/* ---------------------------------------------------------
-   Általános szekcióelrendezés
---------------------------------------------------------- */
-
-.gm-container {
-    position: relative;
-    z-index: 1;
-    width: 100%;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: clamp(64px, 11vw, 112px) 24px;
+.archive-header {
+    margin-bottom: 24px;
 }
 
-.gm-section-content {
-    display: flex;
-    flex-direction: column;
-    gap: 48px;
+.archive-header h3 {
+    font-family: var(--font-display);
+    font-size: clamp(22px, 4vw, 30px);
 }
 
-.gm-section-heading {
+.gm-event-list {
     display: flex;
     flex-direction: column;
     gap: 14px;
 }
 
-.gm-section-heading h2,
-.gm-video-text h2 {
-    background: linear-gradient(180deg, #FFFFFF 10%, #C6B9FB 100%);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-    color: #fff;
-    font-size: clamp(32px, 6vw, 52px);
-    font-weight: 700;
-    line-height: 1.08;
-    letter-spacing: -0.04em;
-}
-
-/* ---------------------------------------------------------
-   Galéria
---------------------------------------------------------- */
-
-.gm-gallery-grid {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-}
-
-.gm-gallery-item {
-    flex: 1 1 240px;
-    min-width: 0;
-    min-height: 340px;
-    overflow: hidden;
-    border-radius: var(--radius-m);
-    box-shadow: 0 20px 50px -14px rgba(0, 0, 0, .6);
-    transition: transform .5s var(--ease), box-shadow .5s var(--ease);
-}
-
-.gm-gallery-item:hover {
-    transform: translateY(-6px);
-    box-shadow: 0 30px 70px -14px rgba(0, 0, 0, .7), 0 0 50px rgba(124, 92, 246, .28);
-}
-
-.gm-gallery-item-large {
-    flex: 2 1 420px;
-    min-height: 400px;
-}
-
-.gm-gallery-placeholder-1 {
-    background-image: url('assets/P1020174.JPG');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-}
-
-.gm-gallery-placeholder-2 {
-    background-image: url('assets/P1000301.JPG');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-}
-
-.gm-gallery-placeholder-3 {
-    background-image: url('assets/P1010168.JPG');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-}
-
-.gm-gallery-placeholder-4 {
-    background-image: url('assets/P1050035.JPG');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-}
-
-.gm-gallery-placeholder-5 {
-    background-image: url('assets/P1010756.JPG');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-
-}
-
-.gm-gallery-caption {
-    position: absolute;
-    z-index: 3;
-    bottom: 16px;
-    left: 16px;
-    padding: 8px 18px;
-    border: 1px solid rgba(255, 255, 255, .16);
-    border-radius: 999px;
-    background: var(--glass-dark);
-    backdrop-filter: blur(16px) saturate(160%);
-    -webkit-backdrop-filter: blur(16px) saturate(160%);
+.gm-loading {
+    color: var(--text-muted);
+    font-family: var(--font-display);
     font-size: 14px;
-    font-weight: 500;
-}
-
-.gm-gallery-note {
-    color: var(--text-secondary);
-    font-size: 14px;
-}
-
-/* ---------------------------------------------------------
-   Eseménylista
---------------------------------------------------------- */
-
-.gm-event-list {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
+    letter-spacing: 0.1em;
 }
 
 .gm-event {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    gap: 16px 32px;
-    padding: 26px 32px;
-    border-radius: var(--radius-m);
-    background: linear-gradient(135deg, rgba(255, 255, 255, .07), rgba(255, 255, 255, .025));
-    backdrop-filter: var(--blur);
-    -webkit-backdrop-filter: var(--blur);
-    box-shadow: var(--shadow-glass);
-    transition: transform .4s var(--ease), box-shadow .4s var(--ease), background .4s var(--ease);
-}
-
-.gm-event:hover {
-    transform: translateY(-4px);
-    background: linear-gradient(135deg, rgba(167, 139, 250, .15), rgba(94, 162, 255, .05));
-    box-shadow: var(--glow-shadow), var(--highlight);
+    justify-content: space-between;
+    gap: 16px 28px;
+    padding: 22px 26px;
+    border-radius: var(--radius-md);
+    background: linear-gradient(145deg, rgba(28, 20, 44, 0.66) 0%, rgba(16, 12, 26, 0.54) 100%);
+    border: 1px solid var(--glass-border);
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
+    box-shadow: var(--glass-shadow);
+    transition: transform 0.35s var(--ease-cinematic), border-color 0.35s ease;
 }
 
 .gm-event-date {
-    flex: 0 0 140px;
-    background: linear-gradient(135deg, #C4B5FD, var(--accent-blue));
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-    color: var(--accent);
-    font-family: "Space Grotesk", system-ui, sans-serif;
-    font-size: 23px;
+    font-family: var(--font-display);
+    font-size: 16px;
     font-weight: 700;
-    letter-spacing: -0.02em;
+    color: var(--violet-glow);
+    padding: 6px 14px;
+    border-radius: var(--radius-pill);
+    background: rgba(169, 112, 255, 0.1);
 }
 
 .gm-event-info {
     flex: 1 1 240px;
-    min-width: 0;
 }
 
 .gm-event-info h3 {
-    font-size: 24px;
-    font-weight: 500;
+    font-family: var(--font-display);
+    font-size: 20px;
+    margin-bottom: 4px;
 }
 
 .gm-event-info p {
     color: var(--text-secondary);
+    font-size: 14.5px;
 }
 
-.gm-event-button {
-    flex: 0 0 auto;
+.gm-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 44px;
+    padding: 0 22px;
+    border-radius: var(--radius-pill);
+    background: rgba(169, 112, 255, 0.14);
+    border: 1px solid rgba(169, 112, 255, 0.32);
+    font-family: var(--font-display);
+    font-size: 13.5px;
+    font-weight: 600;
+    color: #ffffff;
+    transition: background 0.3s ease, transform 0.3s ease;
 }
 
-/* ---------------------------------------------------------
-   Album
---------------------------------------------------------- */
+#album-container[hidden] {
+    display: none !important;
+}
 
 .gm-album {
-    display: flex;
-    flex-direction: column;
-    gap: 22px;
-    padding: clamp(16px, 4vw, 30px);
-    border-radius: var(--radius-l);
-    background: linear-gradient(145deg, rgba(255, 255, 255, .09), rgba(255, 255, 255, .025));
-    backdrop-filter: blur(30px) saturate(170%);
-    -webkit-backdrop-filter: blur(30px) saturate(170%);
-    box-shadow: 0 40px 110px -20px rgba(0, 0, 0, .75), var(--highlight);
-    scroll-margin-top: 20px;
+    margin-top: 28px;
+    padding: 22px;
+    border-radius: var(--radius-lg);
+    background: var(--glass-surface-strong);
+    border: 1px solid var(--glass-border-highlight);
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
 }
 
 .gm-album-header {
@@ -761,33 +1172,20 @@ button:focus-visible {
     flex-wrap: wrap;
     align-items: center;
     justify-content: space-between;
-    gap: 12px 20px;
-}
-
-.gm-album-title {
-    min-width: 0;
-}
-
-.gm-album-title h3 {
-    font-size: clamp(22px, 5vw, 32px);
-    font-weight: 700;
-}
-
-.gm-close-button {
-    min-height: 44px;
-    padding: 0 24px;
+    gap: 14px;
+    margin-bottom: 18px;
 }
 
 .gm-album-viewer {
     position: relative;
     width: 100%;
-    aspect-ratio: 3 / 2;
-    max-height: 560px;
+    height: 60vh;
+    min-height: 320px;
+    max-height: 760px;
+    border-radius: var(--radius-md);
     overflow: hidden;
-    border: 1px solid rgba(255, 255, 255, .12);
-    border-radius: 24px;
-    background: var(--album-bg, #060414);
-    box-shadow: inset 0 0 80px rgba(0, 0, 0, .55);
+    background: #050409;
+    border: 1px solid var(--glass-border);
 }
 
 .gm-album-main-image {
@@ -795,434 +1193,586 @@ button:focus-visible {
     inset: 0;
     width: 100%;
     height: 100%;
-    background: #060410;
     object-fit: contain;
-    transition: opacity .3s ease;
 }
 
 .gm-album-arrow {
     position: absolute;
     top: 50%;
+    transform: translateY(-50%);
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 50px;
-    height: 50px;
-    margin-top: -25px;
-    padding: 0;
-    border: 1px solid rgba(255, 255, 255, .22);
-    border-radius: 50%;
-    background: var(--glass-dark);
-    backdrop-filter: blur(16px) saturate(160%);
-    -webkit-backdrop-filter: blur(16px) saturate(160%);
-    box-shadow: var(--highlight);
-    cursor: pointer;
-    transition: background .3s var(--ease), transform .3s var(--ease), box-shadow .3s var(--ease);
-}
-
-.gm-album-arrow:hover {
-    background: rgba(124, 58, 237, .8);
-    box-shadow: 0 0 32px rgba(139, 92, 246, .65);
-    transform: scale(1.1);
+    background: rgba(23, 16, 36, 0.8);
+    border: 1px solid var(--glass-border);
 }
 
 .gm-album-arrow svg {
-    width: 22px;
-    height: 22px;
+    width: 20px;
+    height: 20px;
 }
 
 .gm-album-arrow path {
     fill: none;
-    stroke: #F6F3FF;
+    stroke: #ffffff;
     stroke-width: 2;
     stroke-linecap: round;
     stroke-linejoin: round;
 }
 
-.gm-album-prev {
-    left: 16px;
-}
-
-.gm-album-next {
-    right: 16px;
-}
+.gm-album-prev { left: 12px; }
+.gm-album-next { right: 12px; }
 
 .gm-album-caption {
     position: absolute;
-    bottom: 16px;
-    left: 16px;
-    padding: 8px 18px;
-    border: 1px solid rgba(255, 255, 255, .16);
-    border-radius: 999px;
-    background: var(--glass-dark);
-    backdrop-filter: blur(16px) saturate(160%);
-    -webkit-backdrop-filter: blur(16px) saturate(160%);
-    font-size: 14px;
-    font-weight: 500;
+    bottom: 12px;
+    left: 12px;
+    padding: 6px 14px;
+    border-radius: var(--radius-pill);
+    background: rgba(8, 7, 13, 0.78);
+    font-size: 12.5px;
 }
 
 .gm-album-thumbnails {
-    display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
     gap: 10px;
+    margin-top: 16px;
 }
 
 .gm-album-thumb {
-    position: relative;
-    display: block;
-    width: 100%;
-    aspect-ratio: 4 / 3;
-    padding: 0;
+    width: 96px;
+    height: 68px;
+    border-radius: 10px;
     overflow: hidden;
-    border: 1px solid rgba(255, 255, 255, .14);
-    border-radius: 14px;
-    outline: var(--thumb-ring, 2px solid transparent);
-    outline-offset: 2px;
-    background: var(--thumb-bg, #0B0820);
-    cursor: pointer;
-    transition: transform .3s var(--ease), border-color .3s var(--ease), filter .3s var(--ease);
-}
-
-.gm-album-thumb:hover {
-    transform: translateY(-3px);
-    border-color: var(--border-strong);
+    border: 1px solid var(--glass-border);
 }
 
 .gm-album-thumb img {
-    position: absolute;
-    inset: 0;
-    display: block;
     width: 100%;
     height: 100%;
     object-fit: cover;
 }
 
-/* ---------------------------------------------------------
-   Videó
---------------------------------------------------------- */
+/* --------------------------------------------------------------------------
+   9. KAPCSOLAT & ÜVEG ŰRLAP
+   -------------------------------------------------------------------------- */
+.contact-layout {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 44px;
+    align-items: start;
+}
 
-.gm-video-content {
+.contact-desc {
+    margin-top: 16px;
+    color: var(--text-secondary);
+    max-width: 480px;
+}
+
+.contact-cards-stack {
     display: flex;
-    flex-wrap: wrap;
+    flex-direction: column;
+    gap: 14px;
+    margin-top: 30px;
+}
+
+.contact-tile {
+    display: flex;
     align-items: center;
-    gap: 56px;
+    gap: 16px;
+    padding: 16px 20px;
+    border-radius: var(--radius-md);
+    transition: transform 0.35s var(--ease-cinematic), border-color 0.35s ease;
 }
 
-.gm-video-frame {
-    flex: 3 1 420px;
-    min-width: 0;
+.tile-icon,
+.tile-avatar {
+    width: 48px;
+    height: 48px;
+    flex-shrink: 0;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(169, 112, 255, 0.12);
+    border: 1px solid rgba(169, 112, 255, 0.25);
+    color: var(--violet-soft);
     overflow: hidden;
-    aspect-ratio: 16 / 9;
-    border-radius: 30px;
-    background: #060414;
-    box-shadow: 0 40px 100px -20px rgba(0, 0, 0, .75), 0 0 80px rgba(99, 102, 241, .2);
 }
 
-.gm-video-frame iframe {
-    position: absolute;
-    inset: 0;
-    display: block;
+.tile-avatar img {
     width: 100%;
     height: 100%;
-    border: 0;
+    object-fit: cover;
 }
 
-.gm-video-text {
+.tile-body {
     display: flex;
-    flex: 2 1 300px;
-    min-width: 0;
     flex-direction: column;
-    gap: 22px;
-}
-
-.gm-video-text > p:not(.gm-eyebrow) {
-    color: var(--text-muted);
-}
-
-/* ---------------------------------------------------------
-   Kapcsolat
---------------------------------------------------------- */
-
-.gm-contact-intro {
-    max-width: 560px;
-    color: var(--text-muted);
-}
-
-.gm-contact-grid {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 18px;
-}
-
-.gm-contact-card {
-    display: flex;
-    flex: 1 1 240px;
+    gap: 2px;
     min-width: 0;
+}
+
+.tile-label {
+    font-size: 12px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}
+
+.tile-body strong {
+    font-family: var(--font-display);
+    font-size: 15.5px;
+    font-weight: 600;
+    color: var(--text-primary);
+    overflow-wrap: anywhere;
+}
+
+.tile-arrow {
+    margin-left: auto;
+    color: var(--violet-glow);
+    font-size: 18px;
+    transition: transform 0.3s ease;
+}
+
+.glass-form {
+    padding: 28px 24px;
+    border-radius: var(--radius-lg);
+}
+
+.glass-form h3 {
+    font-family: var(--font-display);
+    font-size: 24px;
+    margin-bottom: 6px;
+}
+
+.form-hint {
+    color: var(--text-secondary);
+    font-size: 14.5px;
+    margin-bottom: 24px;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px;
+}
+
+.form-group {
+    display: flex;
     flex-direction: column;
     gap: 8px;
-    padding: 30px 32px;
-    border-radius: var(--radius-m);
-    background: linear-gradient(135deg, rgba(255, 255, 255, .07), rgba(255, 255, 255, .025));
-    backdrop-filter: var(--blur);
-    -webkit-backdrop-filter: var(--blur);
-    box-shadow: var(--shadow-glass);
-    transition: transform .4s var(--ease), box-shadow .4s var(--ease), background .4s var(--ease);
+    margin-bottom: 18px;
 }
 
-.gm-contact-card:hover {
-    transform: translateY(-4px);
-    background: linear-gradient(135deg, rgba(167, 139, 250, .13), rgba(94, 162, 255, .05));
-    box-shadow: var(--glow-shadow), var(--highlight);
-}
-
-.gm-contact-label {
-    color: var(--text-secondary);
-    font-size: 12px;
-    font-weight: 600;
-    letter-spacing: .16em;
-    text-transform: uppercase;
-}
-
-.gm-contact-card p:last-child {
-    font-size: 19px;
+.form-group label {
+    font-family: var(--font-display);
+    font-size: 13px;
     font-weight: 500;
+    color: var(--violet-soft);
 }
 
-/* ---------------------------------------------------------
-   Lábléc
---------------------------------------------------------- */
-
-.gm-footer {
-    border-top: 1px solid rgba(255, 255, 255, .08);
-    background: linear-gradient(180deg, rgba(124, 58, 237, .07), var(--background) 65%);
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 13px 16px;
+    border-radius: var(--radius-sm);
+    background: rgba(8, 7, 13, 0.65);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    color: var(--text-primary);
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-.gm-footer-content {
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+    color: var(--text-muted);
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: var(--violet-glow);
+    box-shadow: 0 0 0 3px rgba(169, 112, 255, 0.16);
+}
+
+.form-group select option {
+    background-color: var(--bg-plum);
+    color: var(--text-primary);
+}
+
+.form-feedback {
+    margin-top: 14px;
+    font-size: 14px;
+    color: var(--violet-soft);
+    min-height: 20px;
+}
+
+/* --------------------------------------------------------------------------
+   10. LÁBLÉC & LIGHTBOX
+   -------------------------------------------------------------------------- */
+.site-footer {
+    position: relative;
+    z-index: 2;
+    border-top: 1px solid var(--glass-border);
+    background: rgba(8, 7, 13, 0.9);
+    padding: 40px 0 calc(40px + env(safe-area-inset-bottom));
+}
+
+.footer-inner {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    align-items: center;
+    text-align: center;
+}
+
+.footer-brand p {
+    margin-top: 6px;
+    font-family: var(--font-serif);
+    font-size: 13px;
+    color: var(--text-muted);
+}
+
+.footer-links {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
-    gap: 12px;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 30px 24px;
-    color: var(--text-secondary);
+    justify-content: center;
+    gap: 18px;
     font-size: 14px;
+    color: var(--text-secondary);
 }
 
-/* ---------------------------------------------------------
-   Görgetésre megjelenő animáció (támogató böngészőkben)
---------------------------------------------------------- */
-
-@keyframes gm-reveal {
-    from {
-        opacity: 0;
-        translate: 0 32px;
-        filter: blur(6px);
-    }
+.footer-copy {
+    font-size: 13px;
+    color: var(--text-muted);
 }
 
-@supports (animation-timeline: view()) {
-    .gm-section-heading,
-    .gm-event,
-    .gm-contact-card,
-    .gm-gallery-item,
-    .gm-video-frame,
-    .gm-video-text,
-    .gm-hero-feature {
-        animation: gm-reveal linear backwards;
-        animation-timeline: view();
-        animation-range: entry 0% entry 35%;
-    }
-}
-
-/* ---------------------------------------------------------
-   Galéria – végleges méretezés
---------------------------------------------------------- */
-
-#album-container {
-    display: block;
-    width: 100%;
-    max-width: 100%;
-}
-
-#album-container[hidden] {
-    display: none !important;
-}
-
-#album-container .gm-album {
-    width: 100%;
-    max-width: 1800px;
-    margin: 40px auto;
-    padding: 24px;
-}
-
-#album-container .gm-album-viewer {
-    position: relative;
+.lightbox-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 300;
     display: flex;
     align-items: center;
     justify-content: center;
+    padding: 16px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.35s var(--ease-cinematic);
+}
+
+.lightbox-modal.open {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.lightbox-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(5, 4, 10, 0.88);
+    backdrop-filter: blur(14px);
+}
+
+.lightbox-container {
+    position: relative;
+    z-index: 2;
     width: 100%;
-    height: 80vh;
-    min-height: 650px;
-    max-height: 1200px;
-    aspect-ratio: auto;
+    max-width: 1040px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.lightbox-stage {
+    width: 100%;
+    border-radius: var(--radius-lg);
+    padding: 12px;
     overflow: hidden;
 }
 
-#album-container .gm-album-main-image {
-    position: absolute;
-    inset: 0;
-    display: block;
+.lightbox-stage img {
     width: 100%;
-    height: 100%;
-    max-width: none;
-    max-height: none;
+    max-height: 72svh;
     object-fit: contain;
-    object-position: center;
+    border-radius: calc(var(--radius-lg) - 8px);
+    background: #050409;
 }
 
-#album-container .gm-album-thumbnails {
+.lightbox-info {
+    padding: 14px 8px 4px;
+}
+
+.lightbox-info h4 {
+    font-family: var(--font-display);
+    font-size: 18px;
+}
+
+.lightbox-info p {
+    font-size: 14px;
+    color: var(--text-secondary);
+}
+
+.lightbox-close {
+    position: absolute;
+    top: -16px;
+    right: -6px;
+    z-index: 5;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    font-size: 24px;
     display: flex;
-    flex-wrap: wrap;
+    align-items: center;
     justify-content: center;
-    gap: 14px;
 }
 
-#album-container .gm-album-thumb {
-    flex: 0 0 150px;
-    width: 150px;
-    height: 105px;
+.lightbox-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 5;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
 }
 
-#album-container .gm-album-thumb img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+.lightbox-prev { left: 8px; }
+.lightbox-next { right: 8px; }
+
+/* --------------------------------------------------------------------------
+   11. SCROLL REVEAL ANIMÁCIÓK
+   -------------------------------------------------------------------------- */
+.reveal {
+    opacity: 0;
+    transform: translateY(26px);
+    transition: opacity 0.85s var(--ease-cinematic), transform 0.85s var(--ease-cinematic);
 }
 
-/* ---------------------------------------------------------
-   Reszponzív nézet
---------------------------------------------------------- */
+.reveal.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
 
-@media (max-width: 760px) {
-    .gm-header {
-        padding: 10px 14px;
+.delay-1 { transition-delay: 0.12s; }
+.delay-2 { transition-delay: 0.24s; }
+
+/* --------------------------------------------------------------------------
+   12. RESZPONZÍV BREAKPOINTOK (TABLET & DESKTOP)
+   -------------------------------------------------------------------------- */
+@media (min-width: 768px) {
+    .section {
+        padding: 112px 0;
     }
 
-    .gm-logo img {
-        height: 52px;
+    .container {
+        padding: 0 32px;
     }
 
-    .gm-hero-content,
-    .gm-video-content {
+    .header-actions .btn-sm {
+        display: inline-flex;
+    }
+
+    .about-pillars {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .services-bento {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .header-row {
+        flex-direction: row;
+        align-items: flex-end;
+        justify-content: space-between;
+    }
+
+    .masonry-portfolio {
+        grid-template-columns: repeat(12, 1fr);
+        grid-auto-rows: 260px;
+    }
+
+    .portfolio-item {
+        aspect-ratio: auto;
+        grid-column: span 6;
+    }
+
+    .portfolio-item.span-wide {
+        grid-column: span 7;
+    }
+
+    .portfolio-item.span-tall {
+        grid-column: span 5;
+        grid-row: span 2;
+    }
+
+    .form-row {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .glass-form {
+        padding: 36px;
+    }
+
+    .footer-inner {
+        flex-direction: row;
+        justify-content: space-between;
+        text-align: left;
+    }
+}
+
+@media (min-width: 1024px) {
+    .desktop-nav {
+        display: flex;
+    }
+
+    .hamburger-btn {
+        display: none;
+    }
+
+    .hero-grid {
+        grid-template-columns: 1.12fr 0.88fr;
+        gap: 56px;
+    }
+
+    .about-grid {
+        grid-template-columns: 0.95fr 1.05fr;
+        gap: 64px;
+    }
+
+    .services-bento {
+        grid-template-columns: repeat(6, 1fr);
+    }
+
+    .service-card {
+        grid-column: span 2;
+    }
+
+    .service-card:nth-child(4),
+    .service-card:nth-child(5) {
+        grid-column: span 3;
+    }
+
+    .portfolio-item {
+        grid-column: span 4;
+    }
+
+    .portfolio-item.span-wide {
+        grid-column: span 7;
+    }
+
+    .portfolio-item.span-tall {
+        grid-column: span 5;
+        grid-row: span 2;
+    }
+
+    .video-showcase-block {
+        grid-template-columns: 1.45fr 1fr;
+        padding: 24px;
         gap: 36px;
     }
 
-    .gm-hero-feature {
-        min-height: 380px;
-    }
-
-    .gm-event {
-        padding: 22px;
-    }
-
-    .gm-event-date {
-        flex-basis: 100%;
-    }
-
-    .gm-event-button {
-        width: 100%;
+    .contact-layout {
+        grid-template-columns: 0.95fr 1.05fr;
+        gap: 56px;
     }
 }
 
-@media (max-width: 700px) {
-    #album-container .gm-album {
-        padding: 12px;
+/* --------------------------------------------------------------------------
+   13. HOVER EFFEKTEK (CSAK EGÉRREL RENDELKEZŐ ESZKÖZÖKÖN)
+   -------------------------------------------------------------------------- */
+@media (hover: hover) and (pointer: fine) {
+    .nav-link:hover {
+        color: #ffffff;
+        background: rgba(255, 255, 255, 0.05);
     }
 
-    #album-container .gm-album-viewer {
-        height: 65vh;
-        min-height: 400px;
+    .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 18px 38px -8px rgba(169, 112, 255, 0.65);
     }
 
-    #album-container .gm-album-thumb {
-        flex-basis: 100px;
-        width: 100px;
-        height: 75px;
-    }
-}
-
-@media (max-width: 520px) {
-    .gm-header-wrap {
-        padding: 10px 10px 0;
+    .btn-glass:hover {
+        transform: translateY(-2px);
+        background: rgba(169, 112, 255, 0.12);
+        border-color: var(--glass-border-highlight);
     }
 
-    .gm-header {
-        align-items: flex-start;
-        flex-direction: column;
-        border-radius: 28px;
+    .showcase-card:hover {
+        transform: translateY(-6px);
+        box-shadow: var(--glass-shadow-hover);
     }
 
-    .gm-nav {
-        width: 100%;
-        justify-content: space-between;
-        font-size: 14px;
+    .showcase-card:hover .showcase-frame img {
+        transform: scale(1.04);
     }
 
-    .gm-nav a {
-        padding: 9px 12px;
+    .showcase-card:hover .icon-circle-btn {
+        background: var(--violet-deep);
+        transform: rotate(12deg);
     }
 
-    .gm-hero-content,
-    .gm-container {
-        padding-right: 18px;
-        padding-left: 18px;
+    .service-card:hover {
+        transform: translateY(-6px);
+        border-color: var(--glass-border-highlight);
+        box-shadow: var(--glass-shadow-hover);
     }
 
-    .gm-hero-text h1 {
-        font-size: clamp(38px, 12vw, 52px);
+    .service-card:hover .service-glow {
+        transform: scale(1.3);
+        opacity: 1;
     }
 
-    .gm-hero-feature {
-        min-height: 320px;
-        border-radius: 28px;
+    .portfolio-item:hover {
+        transform: translateY(-5px);
+        border-color: var(--glass-border-highlight);
+        box-shadow: var(--glass-shadow-hover);
     }
 
-    .gm-gallery-item,
-    .gm-gallery-item-large {
-        flex-basis: 100%;
-        min-height: 280px;
+    .portfolio-item:hover img {
+        transform: scale(1.06);
     }
 
-    .gm-album-thumbnails {
-        grid-template-columns: repeat(3, minmax(0, 1fr));
+    .portfolio-item:hover .lightbox-trigger {
+        background: var(--violet-deep);
+        transform: scale(1.08);
     }
 
-    .gm-album-arrow {
-        width: 42px;
-        height: 42px;
-        margin-top: -21px;
+    .gm-event:hover {
+        transform: translateY(-3px);
+        border-color: var(--glass-border-highlight);
     }
 
-    .gm-footer-content {
-        padding-right: 18px;
-        padding-left: 18px;
+    .gm-button:hover {
+        background: var(--violet-deep);
     }
-}
 
-/* Tartalék, ha nincs backdrop-filter támogatás */
+    .contact-tile:hover {
+        transform: translateX(6px);
+        border-color: var(--glass-border-highlight);
+    }
 
-@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
-    .gm-header,
-    .gm-event,
-    .gm-album,
-    .gm-contact-card,
-    .gm-glass-caption,
-    .gm-button-secondary {
-        background: rgba(18, 12, 48, .94);
+    .contact-tile:hover .tile-arrow {
+        transform: translate(3px, -3px);
+    }
+
+    .footer-links a:hover {
+        color: var(--violet-glow);
     }
 }
 
+/* --------------------------------------------------------------------------
+   14. AKADÁLYMENTESSÉG – MOZGÁSCSÖKKENTÉS
+   -------------------------------------------------------------------------- */
 @media (prefers-reduced-motion: reduce) {
     html {
         scroll-behavior: auto;
@@ -1231,164 +1781,13 @@ button:focus-visible {
     *,
     *::before,
     *::after {
-        transition-duration: .01ms !important;
-        animation-duration: .01ms !important;
+        animation-duration: 0.01ms !important;
         animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
     }
-}
 
-.gm-facebook-profile {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    padding: 12px 18px;
-    border: 1px solid rgba(150, 120, 255, .3);
-    border-radius: 16px;
-    background: rgba(25, 25, 55, .65);
-    color: white;
-    text-decoration: none;
-    transition: .3s ease;
-}
-
-.gm-facebook-profile:hover {
-    border-color: #1877F2;
-    transform: translateY(-3px);
-    box-shadow: 0 0 20px rgba(24, 119, 242, .2);
-}
-
-.gm-facebook-profile img {
-    width: 58px;
-    height: 58px;
-    border-radius: 50%;
-    object-fit: cover;
-}
-
-.gm-facebook-profile span:nth-child(2) {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-}
-
-.gm-facebook-profile small {
-    color: #aaa;
-}
-
-.gm-facebook-arrow {
-    margin-left: auto;
-    color: #8e9fff;
-}
-
-.gm-phone-profile {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    padding: 12px 18px;
-    border: 1px solid rgba(94, 234, 212, .25);
-    border-radius: 16px;
-    background: rgba(20, 50, 55, .55);
-    color: white;
-    text-decoration: none;
-    transition: .3s ease;
-}
-
-.gm-phone-profile:hover {
-    border-color: #5EEAD4;
-    transform: translateY(-3px);
-    box-shadow: 0 0 20px rgba(94, 234, 212, .18);
-}
-
-.gm-phone-icon {
-    font-size: 27px;
-    color: #5EEAD4;
-}
-
-.gm-phone-text {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-}
-
-.gm-phone-text small {
-    color: #aaa;
-}
-
-.gm-phone-arrow {
-    margin-left: auto;
-    color: #5EEAD4;
-}
-
-/* GLASS MOON – EMAIL BUTTON */
-
-.gm-email-profile {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    padding: 12px 18px;
-
-    border: 1px solid rgba(167, 139, 250, 0.3);
-    border-radius: 16px;
-
-    background: rgba(55, 35, 85, 0.45);
-    backdrop-filter: blur(12px);
-
-    color: #ffffff;
-    text-decoration: none;
-
-    transition: all 0.3s ease;
-}
-
-.gm-email-profile:hover {
-    border-color: #b48aff;
-    background: rgba(100, 65, 150, 0.25);
-
-    transform: translateY(-3px);
-
-    box-shadow:
-        0 0 15px rgba(167, 139, 250, 0.2),
-        0 0 30px rgba(109, 40, 217, 0.15);
-}
-
-.gm-email-icon {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    width: 48px;
-    height: 48px;
-
-    border-radius: 13px;
-
-    background: rgba(167, 139, 250, 0.15);
-
-    color: #c4a5ff;
-    font-size: 25px;
-}
-
-.gm-email-text {
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-}
-
-.gm-email-text strong {
-    color: #ffffff;
-    font-size: 15px;
-    font-weight: 600;
-}
-
-.gm-email-text small {
-    color: #aaa5bd;
-    font-size: 12px;
-}
-
-.gm-email-arrow {
-    margin-left: auto;
-    color: #b48aff;
-    font-size: 20px;
-
-    transition: transform 0.3s ease;
-}
-
-.gm-email-profile:hover .gm-email-arrow {
-    transform: translate(3px, -3px);
+    .reveal {
+        opacity: 1;
+        transform: none;
+    }
 }
