@@ -3,235 +3,511 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="theme-color" content="#05030E">
-    <meta name="description" content="Glass Moon Studio – fotózás, események és videók.">
-    <title>Glass Moon Studio</title>
+    <meta name="theme-color" content="#08070D">
+    <meta name="description" content="Glass Moon Studios">
+    <title>Glass Moon Studios</title>
+    <link rel="icon" type="image/png" href="./assets/vlogo2.png">
 
-    <link rel="stylesheet" href="./style.css">
-    <link rel="stylesheet" href="./album.css">
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="stylesheet"
-          href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Stíluslapok (a meglévő albums.css megőrzése a Drive galéria kompatibilitásához, ha jelen van) -->
+    <link rel="stylesheet" href="./style.css">
+    <link rel="stylesheet" href="./albums.css">
 </head>
 <body>
-<div class="gm-page">
+    <!-- Háttér fényforrások és finom holdmotívum -->
+    <div class="ambient-canvas" aria-hidden="true">
+        <div class="ambient-orb orb-1"></div>
+        <div class="ambient-orb orb-2"></div>
+        <div class="ambient-orb orb-3"></div>
+        <div class="moon-crescent"></div>
+    </div>
 
-    <!-- HERO / FEJLÉC -->
-    <section id="fent" class="gm-section gm-hero">
-        <div class="gm-glow gm-glow-hero-right" aria-hidden="true"></div>
-        <div class="gm-glow gm-glow-hero-left" aria-hidden="true"></div>
+    <!-- NAVIGÁCIÓ -->
+    <header class="site-header" id="top-header">
+        <div class="header-inner glass-panel">
+            <a href="#kezdolap" class="brand-logo" aria-label="Glass Moon Studios főoldal">
+                <img src="./assets/vlogo2.png" alt="Glass Moon Studios logó" onerror="this.style.display='none'">
+                <span class="brand-wordmark">
+                    GLASS MOON <small>STUDIOS</small>
+                </span>
+            </a>
 
-        <div class="gm-header-wrap">
-            <header class="gm-header">
-                <a href="#fent" class="gm-logo" aria-label="Glass Moon Studio, vissza az elejére">
-                    <img src="./assets/a4598eda7fc422496225b82204e09829.png"
-                         alt="Glass Moon Studio">
-                </a>
+            <nav class="desktop-nav" aria-label="Fő navigáció">
+                <a href="#kezdolap" class="nav-link active">Kezdőlap</a>
+                <a href="#rolunk" class="nav-link">Rólunk</a>
+                <a href="#szolgaltatasok" class="nav-link">Szolgáltatások</a>
+                <a href="#portfolio" class="nav-link">Portfólió</a>
+                <a href="#kapcsolat" class="nav-link">Kapcsolat</a>
+            </nav>
 
-                <nav class="gm-nav" aria-label="Fő menü">
-                    <a href="#galeria">Galéria</a>
-                    <a href="#esemenyek">Események</a>
-                    <a href="#video">Videó</a>
-                    <a href="#kapcsolat">Kapcsolat</a>
-                </nav>
-            </header>
-        </div>
-
-        <div class="gm-hero-content">
-            <div class="gm-hero-text">
-                <p class="gm-eyebrow">Fotózás · Események · Videó</p>
-                <h1>Pillanatok, amelyek üvegtisztán megmaradnak.</h1>
-                <p class="gm-hero-description">
-                    A Glass Moon Studio képei emberekről, helyekről és eseményekről szólnak.
-                    Nézd meg a galériát, az események albumait és a videókat.
-                </p>
-
-                <div class="gm-buttons">
-                    <a href="#galeria" class="gm-button gm-button-primary">Galéria megnézése</a>
-                    <a href="#kapcsolat" class="gm-button gm-button-secondary">Kapcsolat</a>
-                </div>
-            </div>
-
-            <div class="gm-hero-feature">
-                <div class="gm-hero-feature-image"
-                    role="img"
-                    aria-label="Glass Moon Studio kiemelt fotó"
-                    style="background-image: url('./assets/kiemelt.jpeg');">
-                </div>
-
-                <div class="gm-glass-caption">
-                    <p class="gm-caption-eyebrow">Assassin's Creed: Az éden almája</p>
-                    <p>Glass Moon Studio</p>
-                </div>
+            <div class="header-actions">
+                <a href="#kapcsolat" class="btn btn-glass btn-sm">Ajánlatkérés</a>
+                <button class="hamburger-btn" id="hamburger-btn" aria-label="Menü megnyitása" aria-expanded="false" aria-controls="mobile-drawer">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
             </div>
         </div>
-    </section>
+    </header>
 
-    <!-- GALÉRIA -->
-    <section id="galeria" class="gm-section gm-gallery">
-        <div class="gm-glow gm-glow-gallery" aria-hidden="true"></div>
-
-        <div class="gm-container gm-section-content">
-            <div class="gm-section-heading">
-                <p class="gm-eyebrow">Galéria</p>
-                <h2>Válogatás a képeimből</h2>
+    <!-- MOBIL HAMBURGER MENÜ -->
+    <div class="mobile-drawer" id="mobile-drawer" aria-hidden="true">
+        <div class="mobile-drawer-backdrop" id="mobile-backdrop"></div>
+        <div class="mobile-drawer-content glass-panel">
+            <div class="mobile-drawer-header">
+                <span class="brand-wordmark"></span> GLASS MOON</span>
+                <button class="drawer-close" id="drawer-close" aria-label="Menü bezárása">&times;</button>
             </div>
-
-            <div class="gm-gallery-grid">
-                <div class="gm-gallery-item gm-gallery-item-large gm-gallery-placeholder gm-gallery-placeholder-1">
-                    <p class="gm-gallery-caption">Majális · 2026</p>
-                </div>
-                <div class="gm-gallery-item gm-gallery-placeholder gm-gallery-placeholder-2">
-                    <p class="gm-gallery-caption">Portré fotózás · 2026</p>
-                </div>
-                <div class="gm-gallery-item gm-gallery-placeholder gm-gallery-placeholder-3">
-                    <p class="gm-gallery-caption">Lovas nap · 2026</p>
-                </div>
-                <div class="gm-gallery-item gm-gallery-placeholder gm-gallery-placeholder-4">
-                    <p class="gm-gallery-caption">Neoton Fámília koncert · 2026</p>
-                </div>
-                <div class="gm-gallery-item gm-gallery-placeholder gm-gallery-placeholder-5">
-                    <p class="gm-gallery-caption">Konfirmálás · 2026</p>
-                </div>
-            </div>
-
-            <p class="gm-gallery-note"></p>
-        </div>
-    </section>
-
-    <!-- ESEMÉNYEK – a JavaScript automatikusan tölti fel a Google Drive-ból -->
-    <section id="esemenyek" class="gm-section gm-events">
-        <div class="gm-glow gm-glow-events" aria-hidden="true"></div>
-
-        <div class="gm-container gm-section-content">
-            <div class="gm-section-heading">
-                <p class="gm-eyebrow">Események</p>
-                <h2>Ahol ott voltam a kamerával</h2>
-            </div>
-
-            <div class="gm-event-list" aria-live="polite">
-                <p class="gm-loading">Események betöltése...</p>
-            </div>
-
-            <!-- A Google Drive-albumot a script.js jeleníti meg -->
-            <div id="album-container" class="gm-album-container" hidden></div>
-        </div>
-    </section>
-
-    <!-- VIDEÓ -->
-    <section id="video" class="gm-section gm-video">
-        <div class="gm-glow gm-glow-video" aria-hidden="true"></div>
-
-        <div class="gm-container gm-video-content">
-            <div class="gm-video-frame">
-                <iframe
-                    src=https://www.youtube.com/embed/K3Yu4zqmK18?autoplay
-                    title="Glass Moon Studio videó"
-                    loading="lazy"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                    referrerpolicy="strict-origin-when-cross-origin"
-                    allowfullscreen>
-                </iframe>
-            </div>
-
-            <div class="gm-video-text">
-                <p class="gm-eyebrow">Videó</p>
-                <h2>Nézd meg mozgásban is</h2>
-                <p>
-                    
-                </p>
-                <div>
-                    <a href="https://www.youtube.com/@Rakoczi_Lovasa"
-                       target="_blank" rel="noopener noreferrer"
-                       class="gm-button gm-button-primary">Megnyitás a YouTube-on</a>
-                </div>
+            <nav class="mobile-nav" aria-label="Mobil navigáció">
+                <a href="#kezdolap" class="mobile-link active">01. Kezdőlap</a>
+                <a href="#rolunk" class="mobile-link">02. Rólunk</a>
+                <a href="#szolgaltatasok" class="mobile-link">03. Szolgáltatások</a>
+                <a href="#portfolio" class="mobile-link">04. Portfólió</a>
+                <a href="#kapcsolat" class="mobile-link">05. Kapcsolat</a>
+            </nav>
+            <div class="mobile-drawer-footer">
+                <a href="#kapcsolat" class="btn btn-primary btn-full mobile-link">Projekt indítása</a>
             </div>
         </div>
-    </section>
+    </div>
 
-    <!-- KAPCSOLAT -->
-    <section id="kapcsolat" class="gm-section gm-contact">
-        <div class="gm-glow gm-glow-contact" aria-hidden="true"></div>
-
-        <div class="gm-container gm-section-content">
-            <div class="gm-section-heading">
-                <p class="gm-eyebrow">Kapcsolat</p>
-                <h2>Dolgozzunk együtt</h2>
-                <p class="gm-contact-intro">
-                    Írj, ha fotózást szeretnél megbeszélni egy eseményre vagy egy közös munkára.
-                </p>
+    <main>
+        <!-- 1. HERO SZEKCIÓ -->
+        <section id="kezdolap" class="hero-section">
+            <div class="hero-bg-layer">
+                <div class="hero-bg-image" style="background-image: url('./assets/kiemelt.jpeg');"></div>
+                <div class="hero-vignette"></div>
             </div>
 
-            <div class="gm-contact-grid">
-                <div class="gm-contact-card">
-                    <p class="gm-contact-label">E-mail</p>
-                    <a href="https://mail.google.com/mail/?view=cm&fs=1&to=gmpictures01@gmail.com"
-                    class="gm-email-profile"
-                    target="_blank"
-                    rel="noopener noreferrer">
+            <div class="container hero-grid">
+                <div class="hero-content reveal">
+                    <div class="eyebrow-badge glass-pill">
+                        <span class="pulse-dot"></span>
+                        <span>FILMES PRODUKCIÓ &amp; VIZUÁLIS MŰVÉSZET</span>
+                    </div>
 
-                        <span class="gm-email-icon">✉</span>
+                    <h1 class="hero-title">
+                        GLASS MOON <br>
+                        <span class="text-gradient">STUDIOS</span>
+                    </h1>
 
-                        <span class="gm-email-text">
-                            <strong>E-mail kapcsolat</strong>
-                            <small>Írj nekünk!</small>
-                        </span>
+                    <p class="hero-slogan">Pillanatok, amelyek üvegtisztán megmaradnak.</p>
 
-                        <span class="gm-email-arrow">↗</span>
-                    </a>
-                </div>
+                    <p class="hero-lead">
+                        A Glass Moon Studio képei emberekről, helyekről és eseményekről szólnak. Nézd meg a galériát, az események albumait és a videókat.
+                    </p>
 
-                <div class="gm-contact-card">
-                    <p class="gm-contact-label">Telefon</p>
-                    <a href="tel:+36205321341" class="gm-phone-profile">
-                        <span class="gm-phone-icon">☎</span>
-
-                        <span class="gm-phone-text">
-                            <strong>Telefonos kapcsolat</strong>
-                            <small>+36 20 532 1341</small>
-                        </span>
-
-                        <span class="gm-phone-arrow">↗</span>
-                    </a>
-                </div>
-
-                <div class="gm-contact-card">
-                    <p class="gm-contact-label">Közösségi oldal</p>
-                    <a href="https://www.facebook.com/profile.php?id=100089495163344"
-                        class="gm-facebook-profile"
-                        target="_blank"
-                        rel="noopener noreferrer">
-
-                            <img src="assets\734733383_1009419662051197_13158194155706588_n.jpg"
-                                alt="Facebook profilkép">
-
-                            <span>
-                                <strong>Facebook</strong>
-                                <small>Profil megtekintése</small>
-                            </span>
-
-                            <span class="gm-facebook-arrow">↗</span>
+                    <div class="hero-cta-group">
+                        <a href="#portfolio" class="btn btn-primary">
+                            <span>Portfólió felfedezése</span>
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
                         </a>
+                        <a href="#kapcsolat" class="btn btn-glass">Kapcsolatfelvétel</a>
+                    </div>
+                </div>
+
+                <!-- Kiemelt filmes kártya a Hero jobb oldalán -->
+                <div class="hero-showcase reveal delay-2">
+                    <div class="showcase-card glass-panel">
+                        <div class="showcase-frame">
+                            <img src="./assets/kiemelt.jpeg" alt="Assassin's Creed: Az éden almája – Glass Moon Studios kiemelt projekt" loading="eager">
+                            <div class="frame-overlay">
+                                <span class="rec-indicator"><i class="rec-dot"></i> KIEMELT PROJEKT</span>
+                            </div>
+                        </div>
+                        <div class="showcase-meta">
+                            <div>
+                                <span class="meta-tag">KREATÍV RÖVIDFILM &amp; FOTÓ</span>
+                                <h3>Assassin's Creed: Az éden almája</h3>
+                            </div>
+                            <a href="#portfolio" class="icon-circle-btn" aria-label="Megtekintés a portfólióban">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M7 7h10v10"/></svg>
+                            </a>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
+
+        <!-- 2. RÓLUNK SZEKCIÓ -->
+        <section id="rolunk" class="section about-section">
+            <div class="container">
+                <div class="about-grid">
+                    <div class="about-visual reveal">
+                        <div class="about-glass-stack">
+                            <div class="about-main-img glass-panel">
+                                <img src="./assets/P1000301.JPG" alt="Glass Moon Studios portré és hangulat" loading="lazy">
+                            </div>
+                            <div class="about-floating-badge glass-panel">
+                                <div class="moon-icon-wrap">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+                                </div>
+                                <div>
+                                    <strong>Vizuális Perfekcionizmus</strong>
+                                    <span>Minden árnyék és fény tudatos</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="about-text reveal delay-1">
+                        <span class="section-kicker">RÓLUNK</span>
+                        <h2 class="section-title">Több mint rögzítés – <span class="text-gradient">atmoszféra teremtése</span></h2>
+                        <p class="about-paragraph">
+                            A <strong>Glass Moon Studios</strong> azért született, hogy a pillanatnyi benyomásokból időtálló vizuális történeteket alkosson. Hiszünk abban, hogy egyetlen jól komponált képkocka vagy filmszerű snitt képes átadni mindazt, amit szavakkal nehéz megfogalmazni.
+                        </p>
+                        <p class="about-paragraph">
+                            Legyen szó portréfotózásról, lendületes rendezvényfilmekről vagy komplex, forgatókönyvre épülő kisfilmekről, a legmodernebb utómunka-technikákkal és egyedi képi világgal dolgozunk.
+                        </p>
+
+                        <div class="about-pillars">
+                            <div class="pillar-item glass-panel">
+                                <span class="pillar-num">01</span>
+                                <div>
+                                    <h4>Cinematic Látásmód</h4>
+                                    <p>Mozifilmes fényelés, dinamikus kameramozgás és mélység.</p>
+                                </div>
+                            </div>
+                            <div class="pillar-item glass-panel">
+                                <span class="pillar-num">02</span>
+                                <div>
+                                    <h4>Egyedi Utómunka</h4>
+                                    <p>Precíz vágás, hangdizájn és karakteres színvilág.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. SZOLGÁLTATÁSOK SZEKCIÓ -->
+        <section id="szolgaltatasok" class="section services-section">
+            <div class="container">
+                <div class="section-header center reveal">
+                    <span class="section-kicker">SZOLGÁLTATÁSOK</span>
+                    <h2 class="section-title">Kreatív megoldások <span class="text-gradient">minden formátumban</span></h2>
+                    <p class="section-subtitle">Teljes körű vizuális produkció az első ötlettől a végső fényelésig.</p>
+                </div>
+
+                <div class="services-bento">
+                    <!-- 1. Fotózás -->
+                    <article class="service-card glass-panel reveal">
+                        <div class="service-glow"></div>
+                        <div class="service-icon">
+                            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+                        </div>
+                        <h3>Fotózás</h3>
+                        <p>Portrék, rendezvények, koncertek és egyedi kreatív sorozatok nagy felbontású, művészi kidolgozással.</p>
+                        <span class="service-tag">Portré · Esemény · Koncert</span>
+                    </article>
+
+                    <!-- 2. Videózás -->
+                    <article class="service-card glass-panel reveal delay-1">
+                        <div class="service-glow"></div>
+                        <div class="service-icon">
+                            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>
+                        </div>
+                        <h3>Videózás</h3>
+                        <p>Dinamikus eseményvideók, promóciós anyagok és imázsfilmek stabilizált, tűéles képi világgal.</p>
+                        <span class="service-tag">4K · Imázs · Aftermovie</span>
+                    </article>
+
+                    <!-- 3. Kisfilmkészítés -->
+                    <article class="service-card glass-panel featured-service reveal delay-2">
+                        <div class="service-glow"></div>
+                        <div class="service-icon">
+                            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"/><line x1="7" y1="2" x2="7" y2="22"/><line x1="17" y1="2" x2="17" y2="22"/><line x1="2" y1="12" x2="22" y2="12"/><line x1="2" y1="7" x2="7" y2="7"/><line x1="2" y1="17" x2="7" y2="17"/><line x1="17" y1="17" x2="22" y2="17"/><line x1="17" y1="7" x2="22" y2="7"/></svg>
+                        </div>
+                        <h3>Kisfilmkészítés</h3>
+                        <p>Narratív rövidfilmek, tematikus alkotások és vizuális történetek rendezése drámai fény-árnyék játékkal.</p>
+                        <span class="service-tag">Rövidfilm · Narratíva · Rendezői látásmód</span>
+                    </article>
+
+                    <!-- 4. Kreatív produkció -->
+                    <article class="service-card glass-panel reveal">
+                        <div class="service-glow"></div>
+                        <div class="service-icon">
+                            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+                        </div>
+                        <h3>Kreatív produkció</h3>
+                        <p>Koncepcióalkotás, látványtervezés, helyszínkeresés és teljes vizuális arculat felépítése.</p>
+                        <span class="service-tag">Koncepció · Látvány · Tervezés</span>
+                    </article>
+
+                    <!-- 5. Videóvágás és utómunka -->
+                    <article class="service-card glass-panel reveal delay-1">
+                        <div class="service-glow"></div>
+                        <div class="service-icon">
+                            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><line x1="20" y1="4" x2="8.12" y2="15.88"/><line x1="14.47" y1="14.48" x2="20" y2="20"/><line x1="8.12" y1="8.12" x2="12" y2="12"/></svg>
+                        </div>
+                        <h3>Videóvágás és utómunka</h3>
+                        <p>Ritmusra hangolt vágás, professzionális color grading (színkorrekció), hangkeverés és vizuális effektek.</p>
+                        <span class="service-tag">Color Grading · VFX · Sound</span>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. PORTFÓLIÓ ÉS GALÉRIA SZEKCIÓ -->
+        <section id="portfolio" class="section portfolio-section">
+            <div class="container">
+                <div class="section-header reveal">
+                    <span class="section-kicker">PORTFÓLIÓ &amp; GALÉRIA</span>
+                    <div class="header-row">
+                        <h2 class="section-title">Válogatott <span class="text-gradient">munkáink</span></h2>
+                        
+                        <!-- Kategória szűrő -->
+                        <div class="filter-bar glass-panel" role="tablist" aria-label="Portfólió szűrése">
+                            <button class="filter-btn active" data-filter="all" role="tab" aria-selected="true">Összes</button>
+                            <button class="filter-btn" data-filter="esemeny" role="tab" aria-selected="false">Események</button>
+                            <button class="filter-btn" data-filter="portre" role="tab" aria-selected="false">Portré</button>
+                            <button class="filter-btn" data-filter="koncert" role="tab" aria-selected="false">Koncert</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Magazinszerű, eltérő képarányú fotógaléria -->
+                <div class="masonry-portfolio" id="portfolio-grid">
+                    <figure class="portfolio-item span-wide reveal" data-category="esemeny" data-title="Majális · 2026" data-desc="Szabadtéri eseményfotózás – Glass Moon Studios">
+                        <img src="./assets/P1020174.JPG" alt="Majális 2026" loading="lazy">
+                        <figcaption class="portfolio-overlay">
+                            <span class="item-cat">Esemény · 2026</span>
+                            <h3>Majális</h3>
+                            <button class="lightbox-trigger" aria-label="Kép nagyítása">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg>
+                            </button>
+                        </figcaption>
+                    </figure>
+
+                    <figure class="portfolio-item span-tall reveal delay-1" data-category="portre" data-title="Portré fotózás · 2026" data-desc="Karakteres fények és természetes hangulat">
+                        <img src="./assets/P1000301.JPG" alt="Portré fotózás 2026" loading="lazy">
+                        <figcaption class="portfolio-overlay">
+                            <span class="item-cat">Portré · 2026</span>
+                            <h3>Portré fotózás</h3>
+                            <button class="lightbox-trigger" aria-label="Kép nagyítása">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg>
+                            </button>
+                        </figcaption>
+                    </figure>
+
+                    <figure class="portfolio-item reveal" data-category="esemeny" data-title="Lovas nap · 2026" data-desc="Dinamikus mozgás és pillanatmegállítás">
+                        <img src="./assets/P1010168.JPG" alt="Lovas nap 2026" loading="lazy">
+                        <figcaption class="portfolio-overlay">
+                            <span class="item-cat">Esemény · 2026</span>
+                            <h3>Lovas nap</h3>
+                            <button class="lightbox-trigger" aria-label="Kép nagyítása">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg>
+                            </button>
+                        </figcaption>
+                    </figure>
+
+                    <figure class="portfolio-item span-wide reveal delay-1" data-category="koncert" data-title="Neoton Família koncert · 2026" data-desc="Színpadi fények és koncertatmoszféra">
+                        <img src="./assets/P1050035.JPG" alt="Neoton Família koncert 2026" loading="lazy">
+                        <figcaption class="portfolio-overlay">
+                            <span class="item-cat">Koncert · 2026</span>
+                            <h3>Neoton Família koncert</h3>
+                            <button class="lightbox-trigger" aria-label="Kép nagyítása">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg>
+                            </button>
+                        </figcaption>
+                    </figure>
+
+                    <figure class="portfolio-item reveal delay-2" data-category="esemeny" data-title="Bérmálás · 2026" data-desc="Ünnepi pillanatok diszkrét, művészi megörökítése">
+                        <img src="./assets/P1010756.JPG" alt="Bérmálás 2026" loading="lazy">
+                        <figcaption class="portfolio-overlay">
+                            <span class="item-cat">Ünnep · 2026</span>
+                            <h3>Bérmálás</h3>
+                            <button class="lightbox-trigger" aria-label="Kép nagyítása">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg>
+                            </button>
+                        </figcaption>
+                    </figure>
+                </div>
+
+                <!-- VIDEÓPORTFÓLIÓ BLOKK -->
+                <div class="video-showcase-block glass-panel reveal">
+                    <div class="video-embed-wrapper">
+                        <iframe
+                            src="https://www.youtube.com/embed/K3Yu4zqmK18"
+                            title="Glass Moon Studios – Kiemelt videó"
+                            loading="lazy"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                            referrerpolicy="strict-origin-when-cross-origin"
+                            allowfullscreen>
+                        </iframe>
+                    </div>
+                    <div class="video-info-panel">
+                        <span class="section-kicker">FILMES SHOWREEL &amp; VIDEÓ</span>
+                        <h3>Nézd meg mozgásban is</h3>
+                        <p>
+                            A mozgókép az, ahol a hangulat igazán életre kel. Fedezd fel YouTube csatornánkon a legújabb rövidfilmeket, esemény-összefoglalókat és kreatív projekteket.
+                        </p>
+                        <a href="https://www.youtube.com/@Rakoczi_Lovasa" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
+                            <span>YouTube csatorna megnyitása</span>
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- ESEMÉNYEK ÉS GOOGLE DRIVE ALBUMOK (script.js kompatibilitás megőrizve!) -->
+                <div id="esemenyek" class="events-archive-block reveal">
+                    <div class="archive-header">
+                        <div>
+                            <span class="section-kicker">TELJES ALBUMOK</span>
+                            <h3>Ahol ott voltunk a kamerával</h3>
+                        </div>
+                    </div>
+
+                    <div class="gm-event-list" aria-live="polite">
+                        <p class="gm-loading">Események betöltése...</p>
+                    </div>
+
+                    <!-- A Google Drive-albumot a meglévő script.js jeleníti meg itt -->
+                    <div id="album-container" class="gm-album-container" hidden></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 5. KAPCSOLAT SZEKCIÓ -->
+        <section id="kapcsolat" class="section contact-section">
+            <div class="container">
+                <div class="contact-layout">
+                    <!-- Bal oldal: Elérhetőségek és közösségi linkek -->
+                    <div class="contact-info-col reveal">
+                        <span class="section-kicker">KAPCSOLAT</span>
+                        <h2 class="section-title">Alkossunk együtt <span class="text-gradient">valami maradandót</span></h2>
+                        <p class="contact-desc">
+                            Van egy filmes ötleted, eseményfotózásra van szükséged, vagy kreatív vizuális tartalmat tervezel? Írj nekünk bizalommal!
+                        </p>
+
+                        <div class="contact-cards-stack">
+                            <a href="mailto:gmpictures01@gmail.com" class="contact-tile glass-panel">
+                                <div class="tile-icon">
+                                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                                </div>
+                                <div class="tile-body">
+                                    <span class="tile-label">E-mail</span>
+                                    <strong>gmpictures01@gmail.com</strong>
+                                </div>
+                                <span class="tile-arrow">↗</span>
+                            </a>
+
+                            <a href="tel:+36205321341" class="contact-tile glass-panel">
+                                <div class="tile-icon">
+                                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                                </div>
+                                <div class="tile-body">
+                                    <span class="tile-label">Telefon</span>
+                                    <strong>+36 20 532 1341</strong>
+                                </div>
+                                <span class="tile-arrow">↗</span>
+                            </a>
+
+                            <a href="https://www.facebook.com/profile.php?id=100089495163344" target="_blank" rel="noopener noreferrer" class="contact-tile glass-panel">
+                                <div class="tile-avatar">
+                                    <img src="./assets/734733383_1009419662051197_13158194155706588_n.jpg" alt="Glass Moon Studios Facebook" onerror="this.style.display='none'">
+                                </div>
+                                <div class="tile-body">
+                                    <span class="tile-label">Közösségi média</span>
+                                    <strong>Facebook – Glass Moon Studios</strong>
+                                </div>
+                                <span class="tile-arrow">↗</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Jobb oldal: Modern üveghatású kapcsolatfelvételi űrlap -->
+                    <div class="contact-form-col reveal delay-1">
+                        <form class="glass-form glass-panel" id="contact-form" novalidate>
+                            <h3>Üzenet küldése</h3>
+                            <p class="form-hint">Töltsd ki az alábbi mezőket a projekt részleteivel.</p>
+
+                            <div class="form-group">
+                                <label for="sender-name">Név</label>
+                                <input type="text" id="sender-name" name="name" placeholder="Az Ön neve" required>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="sender-email">E-mail cím</label>
+                                    <input type="email" id="sender-email" name="email" placeholder="nev@pelda.hu" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="project-type">Szolgáltatás típusa</label>
+                                    <select id="project-type" name="service">
+                                        <option value="Fotozas">Fotózás</option>
+                                        <option value="Videozas">Videózás</option>
+                                        <option value="Kisfilm">Kisfilmkészítés</option>
+                                        <option value="Kreativ">Kreatív produkció</option>
+                                        <option value="Utomunka">Videóvágás és utómunka</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="sender-message">Projekt leírása</label>
+                                <textarea id="sender-message" name="message" rows="4" placeholder="Írd le röviden az elképzelésedet, a tervezett időpontot és helyszínt..." required></textarea>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary btn-full">
+                                <span>Üzenet összeállítása</span>
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+                            </button>
+
+                            <p class="form-feedback" id="form-feedback" role="status" aria-live="polite"></p>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
 
     <!-- LÁBLÉC -->
-    <footer class="gm-footer">
-        <div class="gm-footer-content">
-            <p>© <span id="current-year"></span> Glass Moon Studio</p>
-            <a href="#fent">Vissza az elejére</a>
+    <footer class="site-footer">
+        <div class="container footer-inner">
+            <div class="footer-brand">
+                <span class="brand-wordmark"></span> GLASS MOON STUDIOS</span>
+                
+            </div>
+            <div class="footer-links">
+                <a href="#kezdolap">Kezdőlap</a>
+                <a href="#rolunk">Rólunk</a>
+                <a href="#szolgaltatasok">Szolgáltatások</a>
+                <a href="#portfolio">Portfólió</a>
+                <a href="#kapcsolat">Kapcsolat</a>
+            </div>
+            <div class="footer-copy">
+                <p>&copy; <span id="current-year"></span> Glass Moon Studios. Minden jog fenntartva.</p>
+            </div>
         </div>
     </footer>
 
-</div>
+    <!-- LIGHTBOX MODÁLIS ABLAK A FOTÓKHOZ -->
+    <div class="lightbox-modal" id="lightbox-modal" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Kép nagyított nézete">
+        <div class="lightbox-backdrop" id="lightbox-backdrop"></div>
+        <div class="lightbox-container">
+            <button class="lightbox-close glass-panel" id="lightbox-close" aria-label="Bezárás">&times;</button>
+            <button class="lightbox-nav lightbox-prev glass-panel" id="lightbox-prev" aria-label="Előző kép">&#10094;</button>
+            <div class="lightbox-stage glass-panel">
+                <img src="" alt="" id="lightbox-img">
+                <div class="lightbox-info">
+                    <h4 id="lightbox-title"></h4>
+                    <p id="lightbox-desc"></p>
+                </div>
+            </div>
+            <button class="lightbox-nav lightbox-next glass-panel" id="lightbox-next" aria-label="Következő kép">&#10095;</button>
+        </div>
+    </div>
 
-<!-- A Google Drive galéria működéséhez szükséges JavaScript -->
-<script src="./script.js" defer></script>
-<script>
-    document.getElementById("current-year").textContent = new Date().getFullYear();
-</script>
+    <!-- Meglévő Google Drive galéria szkript + Új UI interakciók -->
+    <script src="./script.js" defer></script>
+    <script src="./main.js" defer></script>
+    
 </body>
 </html>
